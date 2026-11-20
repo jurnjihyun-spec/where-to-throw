@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA fallback (해시 라우팅을 쓰지만, 혹시 모를 직접 접근에 대비)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
