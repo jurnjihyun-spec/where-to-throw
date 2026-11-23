@@ -3,6 +3,22 @@
 // - 모든 항목은 2026년 11월에 원문을 직접 열람해 내용을 확인한 자료입니다.
 // - 새 자료를 추가할 때도 실제로 열어본 공식 페이지만 등록해주세요.
 
+// 환경부 생활폐기물 분리배출 누리집의 품목 페이지는 'wg:품목명'으로 참조합니다.
+// 예: sources: ['wg:즉석밥 용기'] → 누리집에서 '즉석밥 용기'를 검색한 결과 페이지로 연결
+export function wasteguideSource(name) {
+  return {
+    title: `생활폐기물 분리배출 누리집 – ‘${name}’ 배출방법`,
+    publisher: '환경부',
+    date: '2026.11. 확인',
+    url: `https://wasteguide.or.kr/front/search/searchDispose.do?searchWrd=${encodeURIComponent(name)}`,
+  };
+}
+
+export function getSource(id) {
+  if (id.startsWith('wg:')) return wasteguideSource(id.slice(3));
+  return SOURCES[id];
+}
+
 export const SOURCES = {
   // ---------------------------------------------------------------- 환경부 / 정부
   wasteguide: {
@@ -42,12 +58,6 @@ export const SOURCES = {
     date: '2020.10.6.',
     url: 'https://www.korea.kr/news/policyNewsView.do?newsId=148878454',
   },
-  korea_10y: {
-    title: '재활용품 분리배출 경력 10년에도 몰랐던 사실',
-    publisher: '대한민국 정책브리핑 · 정책기자',
-    date: '2021.3.30.',
-    url: 'https://www.korea.kr/news/policyNewsView.do?newsId=148885369',
-  },
   korea_paper: {
     title: '지구를 구하는 일상 속 분리배출 - 종이 편',
     publisher: '대한민국 정책브리핑 · 환경부',
@@ -61,18 +71,20 @@ export const SOURCES = {
     url: 'https://www.korea.kr/news/policyNewsView.do?newsId=148942194',
   },
 
+  // ---------------------------------------------------------------- 언론 보도 (공식 기준과 다른 주장 소개용)
+  nongmin_rice: {
+    title: '즉석밥 용기는 재활용 안 된다고?…플라스틱 재질 살펴보고 버려야',
+    publisher: '농민신문 (언론 보도)',
+    date: '2024.6.29.',
+    url: 'https://www.nongmin.com/article/20240605500429',
+  },
+
   // ---------------------------------------------------------------- 서울시 / 자치구
   seoul_guide: {
     title: '헷갈리는 분리배출 기준, 서울시가 알려드립니다! (붙임: 환경부 분리배출 요령)',
     publisher: '서울특별시 자원순환과 · 환경분야 누리집',
     date: '2025.8.6. 수정',
     url: 'https://news.seoul.go.kr/env/archives/564022',
-  },
-  seoul_rubber: {
-    title: '고무장갑은 재활용? 종량제봉투? 서울시 배출기준 마련',
-    publisher: '서울특별시 · 내 손안에 서울',
-    date: '2025.6.17.',
-    url: 'https://mediahub.seoul.go.kr/archives/2014828',
   },
   seoul_fake: {
     title: '알쏭달쏭 재활용 가능한 척하는 일반 쓰레기는?',
@@ -103,12 +115,6 @@ export const SOURCES = {
     publisher: '서울특별시 · 내 손안에 서울',
     date: '2025.3.7. 수정',
     url: 'https://mediahub.seoul.go.kr/archives/2010772',
-  },
-  seoul_toothpaste: {
-    title: '치약용기는 재활용이 될까? 올바른 분리배출법 확인하세요!',
-    publisher: '서울특별시 · 내 손안에 서울 (시민기자)',
-    date: '2021.10.1.',
-    url: 'https://mediahub.seoul.go.kr/archives/2002772',
   },
   seoul_medicine: {
     title: '폐의약품, 수거함에 양보하세요! 헷갈리는 배출 방법 총정리',

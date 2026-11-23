@@ -1,5 +1,5 @@
 import { CATEGORIES, DISPOSAL_TYPES, GROUPS } from '../data/categories.js';
-import { SOURCES } from '../data/sources.js';
+import { getSource } from '../data/sources.js';
 import { getConfusingItems, getItem, getItemsByCategory, searchItems } from '../lib/search.js';
 import { paths } from '../lib/router.js';
 import SearchBar from './SearchBar.jsx';
@@ -180,7 +180,7 @@ function Sources({ ids }) {
   return (
     <ul className="sources">
       {ids.map((id) => {
-        const s = SOURCES[id];
+        const s = getSource(id);
         if (!s) return null;
         return (
           <li key={id}>
@@ -237,7 +237,7 @@ function ResultView({ item, result, option }) {
         <h2 className="card__title">왜 그런가요?</h2>
         <p className="reason__text">{reason}</p>
         <button type="button" className="reason__link" onClick={scrollToSources}>
-          공식 근거 {item.sources.length}건 보기
+          근거 자료 {item.sources.length}건 보기
         </button>
       </section>
 
@@ -276,9 +276,9 @@ function ResultView({ item, result, option }) {
         </section>
       )}
 
-      {/* ⑤ 공식 근거 */}
+      {/* ⑤ 근거 자료 */}
       <section className="card card--muted" id="sources">
-        <h2 className="card__title">공식 근거</h2>
+        <h2 className="card__title">근거 자료</h2>
         <Sources ids={item.sources} />
         <p className="local-note">
           분리배출 기준은 지자체마다 다를 수 있어요. 우리 동네 기준은 환경부{' '}

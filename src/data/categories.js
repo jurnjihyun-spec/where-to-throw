@@ -26,6 +26,7 @@ export const DISPOSAL_TYPES = {
   vinyl: { label: '비닐류', group: 'recycle' },
   glass: { label: '유리병류', group: 'recycle' },
   can: { label: '캔류', group: 'recycle' },
+  scrap: { label: '고철류', group: 'recycle' },
   material: { label: '재질별 분리배출', group: 'recycle' },
   general: { label: '종량제봉투', group: 'general' },
   special_bag: { label: '특수규격마대(불연성)', group: 'separate' },

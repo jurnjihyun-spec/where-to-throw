@@ -13,14 +13,16 @@
 //   reason: '판단 이유 1~2문장', // 왜 그 유형인지 (질문형은 옵션별 reason이 우선)
 //   verification: 'confirmed',  // 'confirmed' = 공식 자료 원문에서 확인
 //                               // 'needs-check' = 일부 확인 불가 → '추가 확인 필요' 표시
-//   sources: ['seoul_guide'],   // sources.js의 id (실제로 열람한 자료만)
+//   sources: ['wg:품목명', 'seoul_guide'],
+//                               // 'wg:품목명' = 환경부 생활폐기물 분리배출 누리집 품목 페이지
+//                               // 그 외 = sources.js의 id (실제로 열람한 자료만)
 //   cautions: ['...'],          // (선택) 예외 조건·주의사항 (모든 결과에 공통)
 //   related: ['item-id'],       // (선택) 함께 헷갈리는 물품 링크
 //
 //   // 결과가 하나인 물품 → result
 //   result: { type: 'plastic', steps: ['...'], cautions: ['...'] },
 //
-//   // 오염 상태에 따라 결과가 달라지는 물품만 → question
+//   // 상태·재질 표시에 따라 결과가 달라지는 물품만 → question
 //   question: {
 //     text: '질문 문구',
 //     options: [
@@ -30,12 +32,14 @@
 //   },
 // }
 //
+// - 근거 우선순위: ① 환경부 생활폐기물 분리배출 누리집(2025~, 현행) ② 환경부 지침·설명자료
+//   ③ 서울시 표준 기준(2025) ④ 기타 지자체·기사. 자료끼리 다르면 cautions에 차이를 적습니다.
 // - type 값은 categories.js의 DISPOSAL_TYPES 키를 사용합니다.
 // - 배출 방법(steps)은 2~3단계로 짧게 작성합니다.
 // - 공식 자료로 확인되지 않은 내용은 작성하지 말고 needsCheck / 'needs-check'로 표시합니다.
 // =====================================================================
 
-const CHECK_LOCAL = '세부 기준은 지자체마다 다를 수 있어요. 생활폐기물 분리배출 누리집(wasteguide.or.kr)에서 우리 동네 기준을 확인할 수 있어요.';
+const CHECK_LOCAL = '세부 기준은 지자체마다 다를 수 있어요. 생활폐기물 분리배출 누리집(wasteguide.or.kr)의 \'우리동네 배출방법\'에서 확인할 수 있어요.';
 
 export const ITEMS = [
   // ================================================================== 플라스틱
@@ -44,11 +48,11 @@ export const ITEMS = [
     name: '즉석밥 용기',
     category: 'plastic',
     icon: 'rice',
-    keywords: ['햇반', '햇반 용기', '즉석밥', '즉석 밥', '밥 용기', '밥용기', '밥그릇', '오뚜기밥', '컵밥 용기', '전자레인지 밥', '즉석밥 그릇'],
+    keywords: ['햇반', '햇반 용기', '햇반그릇', '즉석밥', '즉석 밥', '밥 용기', '밥용기', '밥그릇', '오뚜기밥', '컵밥 용기', '전자레인지 밥', '즉석밥 그릇'],
     confusing: 1,
-    reason: '환경부는 즉석밥 용기가 95% 이상 PP(폴리프로필렌) 단일재질이라 깨끗이 씻어 배출하면 재활용이 가능하다고 설명했어요.',
+    reason: '환경부 분리배출 누리집은 즉석밥 용기를 플라스틱 수거함에 배출하라고 안내해요. 복합재질(OTHER)이라 같은 플라스틱으로 다시 만들기는 어렵지만, 화학적 재활용이나 에너지 재활용으로 활용되기 때문이에요.',
     verification: 'confirmed',
-    sources: ['korea_ricebowl', 'seoul_guide', 'seoul_fake', 'wasteguide'],
+    sources: ['wg:즉석밥 용기', 'korea_ricebowl', 'nongmin_rice'],
     result: {
       type: 'plastic',
       steps: [
@@ -57,8 +61,9 @@ export const ITEMS = [
         '플라스틱류로 배출해주세요.',
       ],
       cautions: [
+        '\'햇반 용기는 재활용이 안 되니 일반쓰레기\'라는 기사도 있어요(농민신문, 2024). OTHER 재질이라 재활용이 어렵다는 이유인데, 현행 환경부 누리집은 OTHER류도 플라스틱 수거함으로 배출하도록 안내해요.',
         '떼어낸 필름은 깨끗하면 비닐류로, 이물질을 제거하기 어려우면 종량제봉투에 버려주세요.',
-        '용기에 \'OTHER\' 표시가 있는 경우가 있어요. 서울시 기사(2021)는 이런 복합재질 용기를 재활용이 어려운 예로 들었고, 환경부도 일부 다른 재질(EVOH)이 섞여 재생원료 순도를 낮춘다고 밝혔어요.',
+        '제조사(CJ제일제당)가 햇반 용기를 따로 회수하는 프로그램을 운영해 왔어요(농민신문 보도). 환경부는 따로 회수된 용기는 다른 PP 재질과 함께 재활용된다고 설명했어요. 운영 여부는 제조사에 확인해주세요.',
         CHECK_LOCAL,
       ],
     },
@@ -68,18 +73,18 @@ export const ITEMS = [
     name: '투명 페트병',
     category: 'plastic',
     icon: 'bottle',
-    keywords: ['페트병', '생수병', '물병', '음료수병', '음료병', '페트', 'pet', '탄산음료병', '투명페트', '생수'],
-    reason: '무색 투명 페트병은 따로 모으면 옷감 원사 같은 고품질 원료로 재활용될 수 있어 다른 플라스틱과 구분해서 배출해요.',
+    keywords: ['페트병', '생수병', '물병', '음료수병', '음료병', '페트', 'pet', '탄산음료병', '투명페트', '생수', '무색페트병'],
+    reason: '먹는샘물·음료를 담은 무색 페트병은 고품질 원료로 재활용할 수 있어, 다른 플라스틱과 구분해 무색페트병 수거함에 따로 배출해요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_toothpaste', 'seoul_tips'],
+    sources: ['wg:무색페트병', 'seoul_guide'],
     result: {
       type: 'pet',
       steps: [
-        '내용물을 비우고 라벨을 떼어주세요. 음료병은 물로 헹궈주세요.',
-        '가능한 한 납작하게 압착한 뒤 뚜껑을 닫아주세요.',
-        '투명 페트병 전용 수거함에 배출해주세요.',
+        '라벨과 내용물을 제거하고 물로 헹궈주세요.',
+        '납작하게 압착한 뒤 뚜껑을 닫아주세요.',
+        '무색페트병 수거함에 배출해주세요.',
       ],
-      cautions: ['색이 있는 페트병은 투명 페트병과 구분해서 배출해주세요.', CHECK_LOCAL],
+      cautions: ['색이 있는 페트병이나 페트 재질 용기는 플라스틱류로 배출해요.', CHECK_LOCAL],
     },
   },
   {
@@ -130,18 +135,18 @@ export const ITEMS = [
     name: '마요네즈·케첩 통',
     category: 'plastic',
     icon: 'squeeze',
-    keywords: ['마요네즈', '케첩', '케찹', '소스통', '소스 통', '기름통', '식용유 통', '드레싱 통', '머스터드'],
-    reason: '세척이 어려운 소스 통은 종량제봉투 대상이지만, 제대로 씻고 말리면 플라스틱으로 재활용할 수 있어요.',
+    keywords: ['마요네즈', '케첩', '케찹', '소스통', '소스 통', '기름통', '식용유 통', '드레싱 통', '머스터드', '마요네즈 용기', '케첩 용기'],
+    reason: '마요네즈 통은 플라스틱(PE, PET) 재질이라 내용물을 비우고 헹구면 플라스틱으로 재활용돼요. 기름기가 남아 씻을 수 없다면 종량제봉투 대상이에요.',
     verification: 'confirmed',
-    sources: ['seoul_tips', 'seoul_guide'],
+    sources: ['wg:마요네즈 용기', 'seoul_tips'],
     question: {
       text: '안쪽을 깨끗이 씻을 수 있나요?',
       options: [
         {
-          label: '네, 씻고 말릴 수 있어요',
+          label: '네, 씻을 수 있어요',
           result: {
             type: 'plastic',
-            steps: ['남은 내용물을 비우고 물로 씻어 말려주세요.', '뚜껑 등 다른 재질을 분리해 플라스틱류로 배출해주세요.'],
+            steps: ['남은 내용물을 비우고 물로 헹궈주세요.', '뚜껑 등 다른 재질을 분리해 플라스틱류로 배출해주세요.'],
           },
         },
         {
@@ -184,17 +189,17 @@ export const ITEMS = [
     category: 'plastic',
     icon: 'pump',
     keywords: ['샴푸', '샴푸 용기', '샴푸통', '린스', '컨디셔너', '바디워시', '핸드워시', '펌프', '펌프 용기', '펌핑 용기', '세정제 용기', '로션 펌프'],
-    reason: '몸통은 플라스틱 용기라 재활용되지만, 펌프에는 철제 스프링이 들어 있어 몸통에서 떼어내야 해요.',
+    reason: '샴푸 같은 플라스틱 용기는 재활용되지만, 펌프는 플라스틱과 고철이 섞인 복합재질이라 재활용이 어려워 떼어내야 해요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_fake'],
+    sources: ['wg:샴푸', 'seoul_guide', 'seoul_fake'],
     result: {
       type: 'plastic',
       steps: [
-        '펌프를 분리해 종량제봉투에 버려주세요.',
-        '몸통의 내용물을 비우고 물로 헹궈주세요.',
-        '몸통은 플라스틱류로 배출해주세요.',
+        '펌프와 라벨을 떼어주세요. 펌프는 종량제봉투에 버려주세요.',
+        '용기의 내용물을 비우고 물로 헹궈주세요.',
+        '용기는 플라스틱류로 배출해주세요.',
       ],
-      cautions: ['환경부 요령은 \'스프링이 부착된 펌프는 제거하여 배출\'하도록 하고 있고, 서울시 안내는 펌프를 종량제봉투에 버리도록 하고 있어요.'],
+      cautions: ['펌프를 종량제봉투에 버리라는 안내는 서울시 자료를 따랐어요. 환경부 누리집은 \'펌프를 제거한 후 배출\'하도록만 안내해요.'],
     },
     related: ['cosmetic-container'],
   },
@@ -205,31 +210,40 @@ export const ITEMS = [
     icon: 'tube',
     keywords: ['치약', '치약통', '치약 용기', '튜브', '튜브형', '튜브 용기', '연고 튜브', '핸드크림 튜브', '클렌징폼'],
     confusing: 8,
-    reason: '환경부 분리배출 요령은 치약 용기처럼 물로 헹굴 수 없는 용기는 내용물을 비운 뒤 플라스틱 용기류로 배출하도록 하고 있어요.',
+    reason: '환경부 누리집은 치약 용기를 분리배출 표시에 따라 다르게 안내해요. \'플라스틱\' 표시는 플라스틱류, \'도포·첩합\' 표시는 재활용이 어려워 종량제봉투예요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_brief', 'seoul_toothpaste'],
-    result: {
-      type: 'plastic',
-      steps: [
-        '내용물을 최대한 짜내 비워주세요.',
-        '뚜껑 등 본체와 다른 재질을 분리해주세요.',
-        '플라스틱류로 배출해주세요.',
-      ],
-      cautions: [
-        '자료마다 안내가 달라요. 서울시 시민기자 기사(2021)는 치약 용기를 일반쓰레기로 배출하라고 안내했어요. 거주 지역 기준을 확인해주세요.',
-        '튜브형 화장품은 반으로 잘라 내용물을 닦아낸 뒤, 용기에 적힌 안내에 따라 배출해주세요.',
+    sources: ['wg:치약 용기(플라스틱)', 'wg:치약 용기(도포·첩합)', 'seoul_guide'],
+    question: {
+      text: '튜브에 어떤 분리배출 표시가 있나요?',
+      options: [
+        {
+          label: '\'플라스틱\' 표시가 있어요',
+          result: {
+            type: 'plastic',
+            steps: ['내용물을 최대한 짜내 비우고, 물로 최대한 헹궈주세요.', '뚜껑을 분리해 플라스틱류로 배출해주세요.'],
+          },
+        },
+        {
+          label: '\'도포·첩합\' 표시가 있어요',
+          result: {
+            type: 'general',
+            reason: '\'도포·첩합\' 표시는 재활용이 어려워 잔재물로 처리되는 제품이라는 뜻이에요.',
+            steps: ['종량제봉투에 넣어 버려주세요.'],
+          },
+        },
       ],
     },
+    cautions: ['튜브형 화장품은 반으로 잘라 내용물을 닦아낸 뒤, 용기에 적힌 안내에 따라 배출해주세요.'],
   },
   {
     id: 'styrofoam',
     name: '스티로폼 박스·완충재',
     category: 'plastic',
     icon: 'foam',
-    keywords: ['스티로폼', '스치로폼', '스티로폴', '스티로폼 박스', '아이스박스', '완충재', '발포', '택배 스티로폼', '포장 스티로폼', '스티로폼 상자', '스티로폼 접시'],
-    reason: '깨끗한 스티로폼 상자와 완충재는 재활용되지만, 음식물이 묻어 제거하기 어려운 스티로폼은 재활용되지 않아요.',
+    keywords: ['스티로폼', '스치로폼', '스티로폴', '스티로폼 박스', '아이스박스', '완충재', '발포', '발포합성수지', '택배 스티로폼', '포장 스티로폼', '스티로폼 상자', '스티로폼 접시'],
+    reason: '깨끗한 스티로폼 포장재는 색깔과 상관없이 스티로폼으로 재활용돼요. 음식물이 묻어 제거하기 어려운 스티로폼은 재활용되지 않아요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_policy'],
+    sources: ['wg:스티로폼', 'seoul_guide', 'korea_policy'],
     question: {
       text: '음식물이나 이물질이 묻어 있나요?',
       options: [
@@ -240,7 +254,7 @@ export const ITEMS = [
             steps: [
               '내용물을 비우고, 묻은 것이 있다면 물로 헹궈주세요.',
               '테이프, 운송장, 라벨 등 다른 재질을 모두 떼어주세요.',
-              '스티로폼으로 분리배출해주세요.',
+              '스티로폼 수거함에 배출해주세요.',
             ],
           },
         },
@@ -258,25 +272,22 @@ export const ITEMS = [
       '다른 재질과 코팅되거나 붙어 있는 스티로폼은 종량제봉투에 버려주세요.',
       '건축용 내·외장재 스티로폼은 대형폐기물로 처리해요.',
     ],
-    related: ['fruit-net'],
+    related: ['fruit-net', 'cup-noodle'],
   },
   {
     id: 'fruit-net',
     name: '과일 포장망',
     category: 'plastic',
     icon: 'net',
-    keywords: ['과일망', '과일 망', '과일 포장재', '과일 그물망', '그물망', '스티로폼 망', '스티로폼 그물', '사과 망', '배 망', '복숭아 망', '완충망', '과일 완충재'],
+    keywords: ['과일망', '과일 망', '과일 그물망', '과일그물망', '과일 포장재', '그물망', '스티로폼 망', '스티로폼 그물', '사과 망', '배 망', '복숭아 망', '완충망', '팬캡', '과일 완충재'],
     confusing: 2,
-    reason: '스티로폼처럼 보이지만 재활용이 어려워 분리배출 대상이 아니에요. 환경부와 서울시 모두 종량제봉투로 배출하도록 안내해요.',
+    reason: '스티로폼처럼 보이지만 EPE라는 다른 재질이에요. 재활용 업체가 적고 일반 스티로폼(EPS)과 나눠 모으기 어려워, 가정에서 소량 나오면 일반쓰레기로 버려요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_holiday', 'korea_brief', 'gangnam_cup'],
+    sources: ['wg:과일 그물망', 'seoul_guide', 'korea_holiday'],
     result: {
       type: 'general',
       steps: ['스티로폼 수거함에 넣지 말고, 종량제봉투에 넣어 버려주세요.'],
-      cautions: [
-        '양파망처럼 비닐 재질의 망은 비닐류로 배출해요.',
-        '강남구 카드뉴스(2019)는 이물질 없는 과일 스티로폼 완충재는 분리배출할 수 있다고 안내했어요. 그물 모양 과일망은 서울시 표준 기준(2025)과 정부 안내 모두 종량제봉투 대상이에요.',
-      ],
+      cautions: ['양파망처럼 비닐 재질의 망은 비닐류로 배출해요.'],
     },
     related: ['onion-net', 'styrofoam'],
   },
@@ -285,30 +296,35 @@ export const ITEMS = [
     name: '컵라면 용기',
     category: 'plastic',
     icon: 'noodle',
-    keywords: ['컵라면', '컵밥', '라면 용기', '사발면', '컵누들', '컵라면 그릇'],
+    keywords: ['컵라면', '컵라면 그릇', '라면 용기', '사발면', '컵누들', '스티로폼 컵라면', '종이 컵라면'],
     confusing: 4,
-    reason: '깨끗이 씻은 컵라면 용기는 재질별로 재활용될 수 있지만, 국물이 배어 지워지지 않으면 선별이 어려워 종량제봉투 대상이에요.',
+    reason: '컵라면 용기는 재질과 오염 정도에 따라 달라요. 종이 용기는 씻으면 종이류, 스티로폼 용기는 국물이 배거나 색·인쇄가 있으면 일반쓰레기예요.',
     verification: 'confirmed',
-    sources: ['korea_policy', 'gangnam_cup', 'seoul_toothpaste'],
+    sources: ['wg:종이 컵라면', 'wg:스티로폼 컵라면', 'gangnam_cup'],
     question: {
-      text: '국물 자국이 깨끗하게 씻기나요?',
+      text: '용기 재질과 상태가 어떤가요?',
       options: [
         {
-          label: '네, 깨끗하게 씻겨요',
+          label: '종이 용기이고, 씻으면 깨끗해져요',
           result: {
-            type: 'material',
-            steps: [
-              '남은 국물과 건더기를 비우고 물로 헹궈주세요.',
-              '뚜껑을 분리해주세요.',
-              '용기에 표시된 재질(종이, 스티로폼 등)로 배출해주세요.',
-            ],
+            type: 'paper',
+            steps: ['남은 국물과 건더기를 비우고 물로 헹궈주세요.', '뚜껑을 분리해 종이류로 배출해주세요.'],
+          },
+        },
+        {
+          label: '스티로폼 용기예요',
+          result: {
+            type: 'general',
+            reason: '스티로폼 컵라면 용기는 국물·기름으로 오염·착색되거나 색·인쇄가 있으면 재활용이 어려워요.',
+            steps: ['남은 국물과 건더기를 비워주세요.', '종량제봉투에 넣어 버려주세요.'],
+            cautions: ['사용하지 않았거나 오염되지 않은 깨끗한 흰색 스티로폼 용기만 스티로폼 수거함에 배출할 수 있어요.'],
           },
         },
         {
           label: '빨간 기름 자국이 지워지지 않아요',
           result: {
             type: 'general',
-            reason: '물로 헹궈도 기름기가 이염돼 지워지지 않는 용기는 종량제봉투에 버려야 해요.',
+            reason: '물로 헹궈도 기름기가 배어 지워지지 않는 용기는 종량제봉투에 버려야 해요.',
             steps: ['남은 국물과 건더기를 비워주세요.', '종량제봉투에 넣어 버려주세요.'],
           },
         },
@@ -320,29 +336,37 @@ export const ITEMS = [
     name: '일회용 빨대',
     category: 'plastic',
     icon: 'straw',
-    keywords: ['빨대', '플라스틱 빨대', '스트로우', '스트로', '음료 빨대'],
-    reason: '빨대처럼 작은 플라스틱은 선별하기 어렵고, 선별 기계에 끼어 오히려 작업을 방해해요.',
+    keywords: ['빨대', '플라스틱 빨대', '스트로우', '스트로', '음료 빨대', '스텐 빨대', '스테인리스 빨대'],
+    reason: '환경부 누리집은 빨대처럼 작은 플라스틱도 이물질이 묻지 않았다면 플라스틱으로 배출하라고 안내해요. 일회용 빨대는 보통 PP 단일재질이에요.',
     verification: 'confirmed',
-    sources: ['seoul_fake'],
+    sources: ['wg:빨대', 'seoul_fake'],
     result: {
-      type: 'general',
-      steps: ['종량제봉투에 넣어 버려주세요.'],
-      cautions: ['컵 음료는 빨대와 뚜껑을 떼어낸 뒤, 몸통만 씻어서 재질에 맞게 배출해주세요.'],
+      type: 'plastic',
+      steps: ['음료가 남지 않게 헹궈주세요.', '플라스틱 빨대는 플라스틱류로 배출해주세요.'],
+      cautions: [
+        '스테인리스 빨대는 고철로 배출해요.',
+        '자료마다 달라요. 서울시 기사(2021)는 빨대 같은 작은 플라스틱은 선별이 어렵다며 종량제봉투를 안내했어요. 거주 지역 기준을 확인해주세요.',
+      ],
     },
     related: ['plastic-cutlery'],
   },
   {
     id: 'plastic-cutlery',
-    name: '일회용 숟가락·포크',
+    name: '일회용 숟가락·젓가락',
     category: 'plastic',
     icon: 'spoon',
-    keywords: ['플라스틱 숟가락', '숟가락', '일회용 숟가락', '포크', '일회용 포크', '플라스틱 포크', '스푼', '나이프', '일회용 수저'],
-    reason: '일회용 숟가락·포크 같은 작은 플라스틱은 선별이 어렵고 선별 기계에 끼어 작업을 방해해요.',
+    keywords: ['플라스틱 숟가락', '숟가락', '일회용 숟가락', '플라스틱 젓가락', '일회용 수저', '스푼', '아이스크림 숟가락', '요플레 숟가락', '수저'],
+    reason: '플라스틱(PP 등) 단일 재질 숟가락·젓가락은 플라스틱으로 배출해요. 나무·실리콘이거나 여러 재질이 섞였다면 종량제봉투예요.',
     verification: 'confirmed',
-    sources: ['seoul_fake'],
+    sources: ['wg:숟가락(단일 재질)', 'wg:숟가락(복합 재질)', 'seoul_fake'],
     result: {
-      type: 'general',
-      steps: ['종량제봉투에 넣어 버려주세요.'],
+      type: 'plastic',
+      steps: ['재질을 확인하고 이물질을 헹궈주세요.', '플라스틱 단일 재질이면 플라스틱류로 배출해주세요.'],
+      cautions: [
+        '나무·실리콘·멜라민 재질이나 여러 재질이 섞인 제품은 종량제봉투에 버려주세요.',
+        '스테인리스 재질은 고철로 배출해요.',
+        '서울시 기사(2021)는 작은 플라스틱이 선별 기계에 끼어 종량제봉투를 안내하기도 했어요. 지역 기준을 확인해주세요.',
+      ],
     },
     related: ['straw', 'chopsticks'],
   },
@@ -353,16 +377,16 @@ export const ITEMS = [
     name: '뽁뽁이 (에어캡)',
     category: 'vinyl',
     icon: 'bubble',
-    keywords: ['뽁뽁이', '뾱뾱이', '에어캡', '에어 캡', '버블랩', '완충 비닐', '택배 뽁뽁이', '포장 뽁뽁이', '에어 쿠션'],
+    keywords: ['뽁뽁이', '뾱뾱이', '에어캡', '에어 캡', '버블랩', '완충 비닐', '택배 뽁뽁이', '포장 뽁뽁이', '에어 쿠션', '유색 에어캡'],
     confusing: 3,
-    reason: '뽁뽁이는 비닐 재질이에요. 분리배출 표시가 없어도 깨끗한 비닐은 재활용할 수 있어 비닐류로 배출해요.',
+    reason: '뽁뽁이는 비닐 재질이라 비닐류로 재활용돼요. 비닐은 재질·색상과 상관없이 모아서 플라스틱 배수로, 건축 자재 등으로 다시 만들어져요.',
     verification: 'confirmed',
-    sources: ['seoul_vinyl', 'seoul_guide'],
+    sources: ['wg:에어캡', 'seoul_vinyl', 'seoul_guide'],
     result: {
       type: 'vinyl',
       steps: [
-        '붙어 있는 테이프와 송장 스티커를 떼어주세요.',
-        '흩날리지 않게 투명·반투명 봉투에 모아 비닐류로 배출해주세요.',
+        '붙어 있는 테이프, 송장 같은 이물질을 떼어주세요.',
+        '흩날리지 않게 봉투에 모아 비닐류로 배출해주세요.',
       ],
       cautions: ['비닐류는 플라스틱류와 섞어서 버리지 마세요.'],
     },
@@ -373,10 +397,10 @@ export const ITEMS = [
     name: '비닐 포장재·과자 봉지',
     category: 'vinyl',
     icon: 'bag',
-    keywords: ['비닐', '비닐봉지', '비닐봉투', '포장 비닐', '포장비닐', '과자봉지', '과자 봉지', '라면봉지', '라면 봉지', '택배 비닐', '택배봉투', '커피 비닐', '세탁소 비닐', '봉지', '필름'],
-    reason: '비닐은 색과 종류에 관계없이 비닐류로 재활용돼요. 분리배출 표시가 없는 필름·작은 포장재도 비닐류예요.',
+    keywords: ['비닐', '비닐봉지', '비닐봉투', '포장 비닐', '포장비닐', '과자봉지', '과자 봉지', '라면봉지', '라면 봉지', '택배 비닐', '택배봉투', '커피 비닐', '세탁소 비닐', '봉지', '필름', '사탕봉지'],
+    reason: '과자 봉지 같은 대부분의 비닐 포장재는 재활용 의무 대상이라 비닐류로 재활용돼요. 분리배출 표시가 없는 필름·작은 포장재도 비닐류예요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_vinyl', 'korea_policy'],
+    sources: ['wg:과자봉지', 'seoul_guide', 'seoul_vinyl'],
     result: {
       type: 'vinyl',
       steps: [
@@ -396,28 +420,46 @@ export const ITEMS = [
     name: '비닐랩',
     category: 'vinyl',
     icon: 'wrap',
-    keywords: ['랩', '랩필름', '랩 필름', '위생랩', '주방 랩', '크린랩', '음식 랩'],
-    reason: '사용한 비닐랩은 이물질을 깨끗이 제거하기 어렵고, 비닐처럼 보여도 PVC 소재라 재활용이 쉽지 않아요.',
+    keywords: ['랩', '랩필름', '랩 필름', '위생랩', '주방 랩', '크린랩', '음식 랩', '포장 랩'],
+    reason: '가정용 랩은 PE 재질이라 깨끗하면 비닐류로 재활용돼요. 음식물로 오염된 랩은 일반쓰레기예요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_holiday', 'seoul_fake'],
-    result: {
-      type: 'general',
-      steps: ['종량제봉투에 넣어 버려주세요.'],
-      cautions: ['환경부 요령상 이물질이 없는 깨끗한 랩필름은 비닐류에 포함되지만, 서울시 표준 기준(2025)은 랩을 종량제봉투로 안내해요.'],
+    sources: ['wg:랩', 'seoul_guide', 'korea_holiday'],
+    question: {
+      text: '랩이 깨끗한가요?',
+      options: [
+        {
+          label: '깨끗해요 (헹구면 깨끗해져요)',
+          result: {
+            type: 'vinyl',
+            steps: ['물로 헹궈 이물질을 없애주세요.', '비닐류로 배출해주세요.'],
+          },
+        },
+        {
+          label: '음식물이 묻어 있어요',
+          result: {
+            type: 'general',
+            steps: ['종량제봉투에 넣어 버려주세요.'],
+          },
+        },
+      ],
     },
+    cautions: [
+      '배달 음식 포장 랩, 마트에서 쓰는 포장용 랩은 PVC 재질이라 재활용이 안 돼요.',
+      '서울시 표준 기준(2025)은 랩을 종량제봉투로 안내해요. 거주 지역 기준을 확인해주세요.',
+    ],
   },
   {
     id: 'onion-net',
     name: '양파망',
     category: 'vinyl',
     icon: 'net',
-    keywords: ['양파망', '양파 망', '채소망', '채소 망', '마늘망', '귤망'],
-    reason: '양파나 채소를 담는 양파망은 비닐 재질이라 비닐류로 배출해요.',
+    keywords: ['양파망', '양파 망', '채소망', '채소 망', '배추망', '마늘망', '귤망'],
+    reason: '양파·배추 등을 담는 합성수지 그물망은 재활용 의무 대상이고 비닐과 성질이 비슷해 비닐 수거함으로 배출해요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_holiday'],
+    sources: ['wg:양파망', 'seoul_guide', 'korea_holiday'],
     result: {
       type: 'vinyl',
-      steps: ['안에 남은 흙이나 이물질을 털어주세요.', '비닐을 배출할 때 함께 비닐류로 배출해주세요.'],
+      steps: ['안에 남은 흙이나 이물질을 털어주세요.', '비닐류로 배출해주세요.'],
     },
     related: ['fruit-net'],
   },
@@ -428,11 +470,11 @@ export const ITEMS = [
     name: '종이컵',
     category: 'paper',
     icon: 'cup',
-    keywords: ['종이 컵', '일회용 종이컵', '커피컵', '커피 컵', '테이크아웃 컵', '자판기 컵', '코팅 종이컵', '코팅된 종이컵', '양면 코팅 종이컵'],
+    keywords: ['종이 컵', '일회용 종이컵', '커피컵', '커피 컵', '테이크아웃 컵', '자판기 컵', '코팅 종이컵', '코팅된 종이컵', '양면 코팅 종이컵', '정수기 컵'],
     confusing: 5,
-    reason: '종이컵은 다른 종이와 섞지 않고 따로 모아 배출해요. 단, 양면이 코팅된 종이컵은 재활용 대상이 아니에요.',
+    reason: '종이컵은 다른 종이와 섞지 않고 따로 모아 배출해요. 단, 차가운 음료용으로 양면이 코팅된 종이컵은 물에 풀리지 않아 재활용이 어려워요.',
     verification: 'confirmed',
-    sources: ['seoul_guide'],
+    sources: ['seoul_guide', 'wg:양면 코팅종이컵', 'wg:음수대용 종이컵'],
     result: {
       type: 'paperpack',
       steps: [
@@ -442,6 +484,7 @@ export const ITEMS = [
       ],
       cautions: [
         '양면이 코팅된 종이컵은 종량제봉투에 버려주세요.',
+        '정수기용 종이컵은 압착해서 묶어 종이류로 배출해요.',
         '자원순환보증금 대상 일회용컵은 매장·무인회수기에 반납하면 보증금을 돌려받을 수 있어요.',
       ],
     },
@@ -451,14 +494,15 @@ export const ITEMS = [
     name: '영수증',
     category: 'paper',
     icon: 'receipt',
-    keywords: ['감열지', '카드 영수증', '카드전표', '전표', '택배 송장', '택배전표', '운송장', '송장', '대기번호표', '번호표'],
+    keywords: ['감열지', '카드 영수증', '카드전표', '전표', '택배 송장', '택배전표', '운송장', '송장', '대기번호표', '번호표', '로또 용지'],
     confusing: 6,
-    reason: '영수증은 감열지라 종이처럼 보여도 재활용이 안 되는 품목이에요. 택배 전표도 마찬가지예요.',
+    reason: '영수증은 화학물질을 바른 감열지라서 재활용하면 얼룩이 생겨요. 종이처럼 보여도 종량제봉투에 버려야 해요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_fake'],
+    sources: ['wg:영수증', 'seoul_guide'],
     result: {
       type: 'general',
       steps: ['개인정보가 있다면 가리거나 찢어주세요.', '종량제봉투에 넣어 버려주세요.'],
+      cautions: ['택배 전표(송장)도 종량제봉투 대상이에요. (서울시)'],
     },
   },
   {
@@ -467,22 +511,19 @@ export const ITEMS = [
     category: 'paper',
     icon: 'box',
     keywords: ['택배박스', '박스', '상자', '종이상자', '종이 박스', '골판지', '라면 박스', '택배 포장재', '택배 포장'],
-    reason: '골판지 상자는 테이프·송장 같은 다른 재질만 제거하면 종이류로 재활용돼요.',
+    reason: '골판지 상자는 테이프·송장 같은 다른 재질만 제거하면 종이류로 재활용돼요. 일반 종이와는 구분해서 배출해요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_tips'],
+    sources: ['wg:택배 상자', 'seoul_guide'],
     result: {
       type: 'paper',
       steps: [
         '테이프, 송장, 철핀을 모두 제거해주세요.',
         '상자를 접어 납작하게 만들어주세요.',
-        '다른 종이와 섞이지 않게 종이류로 배출해주세요.',
+        '일반 종이와 섞이지 않게 종이류로 배출해주세요.',
       ],
-      cautions: [
-        '떼어낸 송장은 종량제봉투에 버려주세요.',
-        '안쪽에 은박·비닐이 붙은 보냉 택배 상자는 종이류가 아니에요.',
-      ],
+      cautions: ['떼어낸 송장은 종량제봉투에 버려주세요.'],
     },
-    related: ['cooler-bag', 'bubble-wrap', 'styrofoam'],
+    related: ['paper-cooler-box', 'bubble-wrap', 'styrofoam'],
   },
   {
     id: 'milk-carton',
@@ -490,17 +531,17 @@ export const ITEMS = [
     category: 'paper',
     icon: 'carton',
     keywords: ['우유팩', '우유곽', '종이팩', '두유팩', '주스팩', '쥬스팩', '멸균팩', '살균팩', '소주팩'],
-    reason: '우유팩은 비닐로 코팅된 재질이라 일반 종이와 함께 배출하면 재활용이 어려워요. 종이팩끼리 따로 모아야 해요.',
+    reason: '종이팩은 고품질 펄프로 만들어져 미용 티슈, 화장지 같은 제품으로 재활용돼요. 그래서 일반 종이와 따로 모아야 해요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_paper'],
+    sources: ['wg:우유팩', 'seoul_guide'],
     result: {
       type: 'paperpack',
       steps: [
         '내용물을 비우고 물로 헹군 뒤 말려주세요.',
         '빨대, 비닐 등 다른 재질을 떼어주세요.',
-        '종이팩 전용 수거함에 배출해주세요.',
+        '종이팩 수거함에 배출해주세요. 일반팩·멸균팩은 구분하지 않아도 돼요.',
       ],
-      cautions: ['전용 수거함이 없다면 끈으로 묶어 다른 종이류와 구분되게 종이류 수거함에 배출해주세요.'],
+      cautions: ['종이팩 수거함이 없다면 종이팩만 묶어서 일반 종이와 구분해 종이류로 배출해주세요.'],
     },
   },
   {
@@ -508,10 +549,10 @@ export const ITEMS = [
     name: '피자·치킨 박스',
     category: 'paper',
     icon: 'pizza',
-    keywords: ['피자박스', '피자 박스', '피자 상자', '치킨 박스', '치킨박스', '배달 상자', '음식 상자', '기름 묻은 종이'],
-    reason: '종이류는 깨끗해야 재활용돼요. 기름이나 음식물로 오염된 종이는 재활용이 어려워요.',
+    keywords: ['피자박스', '피자 박스', '피자 상자', '치킨 박스', '치킨박스', '배달 상자', '음식 상자', '케이크 박스', '기름 묻은 종이'],
+    reason: '음식 포장 박스는 내용물을 비우고 이물질이 묻지 않았다면 종이류로 재활용돼요. 이물질이 묻었다면 종량제봉투예요.',
     verification: 'confirmed',
-    sources: ['seoul_tips', 'korea_10y'],
+    sources: ['wg:피자 박스', 'seoul_tips'],
     question: {
       text: '기름이나 음식물이 묻어 있나요?',
       options: [
@@ -519,14 +560,13 @@ export const ITEMS = [
           label: '깨끗해요',
           result: {
             type: 'paper',
-            steps: ['테이프 등 다른 재질을 떼어주세요.', '접어서 종이류로 배출해주세요.'],
+            steps: ['고정핀, 테이프 등 다른 재질을 떼어주세요.', '접어서 종이류로 배출해주세요.'],
           },
         },
         {
           label: '기름·음식물이 묻었어요',
           result: {
             type: 'general',
-            reason: '기름이 묻거나 오염된 종이는 재활용이 어려워 종량제봉투에 버려야 해요.',
             steps: ['종량제봉투에 넣어 버려주세요.'],
           },
         },
@@ -569,19 +609,20 @@ export const ITEMS = [
     related: ['coated-paper'],
   },
   {
-    id: 'cooler-bag',
-    name: '보냉팩·보냉 택배 상자',
+    id: 'paper-cooler-box',
+    name: '종이 보랭박스',
     category: 'paper',
     icon: 'cooler',
-    keywords: ['보냉팩', '보냉백', '보냉 봉투', '은박 보냉', '은박 봉투', '보온보냉팩', '보냉 상자', '보냉 택배', '은박 택배', '보냉 파우치'],
-    reason: '안쪽에 은박(알루미늄박)·비닐이 붙어 있어 분리되지 않으므로 재활용이 어려워요.',
+    keywords: ['보랭박스', '보냉박스', '보냉 상자', '보랭 상자', '보냉 택배', '은박 택배 상자', '알루미늄 택배 상자', '종이 보냉박스'],
+    reason: '골판지 상자 안쪽에 알루미늄 필름을 붙인 상자예요. 필름을 떼어내면 종이류로 재활용할 수 있어요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_brief'],
+    sources: ['wg:종이 보랭박스', 'seoul_guide'],
     result: {
-      type: 'general',
-      steps: ['안에 든 아이스팩·내용물을 빼주세요.', '종량제봉투에 넣어 버려주세요.'],
+      type: 'paper',
+      steps: ['안쪽 알루미늄 필름을 떼어주세요.', '접어서 종이류로 배출해주세요.'],
+      cautions: ['필름이 종이와 분리되지 않는 상자는 종량제봉투에 버려주세요. (서울시)'],
     },
-    related: ['ice-pack', 'parcel-box'],
+    related: ['cooler-bag', 'parcel-box'],
   },
   {
     id: 'newspaper-book',
@@ -591,15 +632,14 @@ export const ITEMS = [
     keywords: ['신문', '신문지', '책', '공책', '노트', '전단지', '잡지', '종이', 'a4', '달력'],
     reason: '종이는 비닐 코팅·스프링 같은 다른 재질을 제거하면 종이류로 재활용돼요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_tips'],
+    sources: ['wg:신문지', 'seoul_guide'],
     result: {
       type: 'paper',
       steps: [
-        '비닐 코팅 표지, 스프링 등 종이가 아닌 부분을 제거해주세요.',
+        '비닐, 코팅 표지, 스프링 등 종이가 아닌 부분을 제거해주세요.',
         '반듯하게 펴서 쌓은 뒤 묶어주세요.',
         '물에 젖지 않게 종이류로 배출해주세요.',
       ],
-      cautions: ['고철 단일재질 스프링은 고철 수거함에 배출해주세요.'],
     },
   },
 
@@ -609,20 +649,19 @@ export const ITEMS = [
     name: '유리병',
     category: 'glass-metal',
     icon: 'glass-bottle',
-    keywords: ['병', '소주병', '맥주병', '음료병', '잼병', '유리 병', '와인병', '드링크병'],
-    reason: '음료수병 등 유리병은 내용물을 비우고 이물질을 제거하면 유리병류로 재활용돼요.',
+    keywords: ['병', '소주병', '맥주병', '음료병', '잼병', '유리 병', '와인병', '드링크병', '소스병'],
+    reason: '깨끗한 유리병은 유리병류로 재활용돼요. 소주·맥주병 같은 빈용기보증금 대상 병은 그대로 씻어서 다시 쓰여요.',
     verification: 'confirmed',
-    sources: ['seoul_guide'],
+    sources: ['wg:유리병', 'seoul_guide'],
     result: {
       type: 'glass',
       steps: [
         '뚜껑을 분리하고 내용물을 비운 뒤 헹궈주세요.',
-        '떼어낼 수 있는 상표는 제거해주세요.',
-        '깨지지 않게 유리병류로 배출해주세요.',
+        '깨지지 않게 유리병 수거함에 배출해주세요.',
       ],
       cautions: [
+        '빈용기보증금 대상 병은 빈용기 반환 수집소나 무인회수기에 반환하면 보증금을 돌려받을 수 있어요.',
         '병 안에 담배꽁초 등 이물질을 넣지 마세요.',
-        '소주·맥주 등 빈용기보증금 대상 병은 소매점에 반납하면 보증금을 돌려받을 수 있어요.',
       ],
     },
     related: ['broken-glass', 'ceramic'],
@@ -633,14 +672,14 @@ export const ITEMS = [
     category: 'glass-metal',
     icon: 'shard',
     keywords: ['유리 조각', '유리조각', '깨진 컵', '깨진 유리컵', '유리컵', '깨진 병', '거울', '판유리'],
-    reason: '깨진 유리는 유리병류로 재활용되지 않아요. 다치지 않게 감싸서 양에 따라 종량제봉투나 특수규격마대로 배출해요.',
+    reason: '깨진 유리는 재활용이 어렵고 불에 타지 않는 불연성 폐기물이에요. 불연성 마대에 담아 매립해요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_policy'],
+    sources: ['wg:깨진 유리', 'seoul_guide'],
     result: {
-      type: 'general',
+      type: 'special_bag',
       steps: [
-        '신문지 등으로 단단히 감싸주세요.',
-        '소량은 종량제봉투에, 양이 많으면 특수규격마대에 담아 배출해주세요.',
+        '다치지 않게 신문지, 테이프 등으로 충분히 감싸주세요.',
+        '불연성 종량제 특수마대에 담아 배출해주세요. 소량이면 감싸서 종량제봉투에 버려도 괜찮아요.',
       ],
       cautions: ['거울, 판유리도 유리병류가 아니에요.'],
     },
@@ -651,17 +690,17 @@ export const ITEMS = [
     name: '도자기·내열유리',
     category: 'glass-metal',
     icon: 'bowl',
-    keywords: ['도자기', '사기그릇', '그릇', '접시', '뚝배기', '머그컵', '내열유리', '내열 유리', '크리스탈', '유리 식기', '깨진 도자기'],
-    reason: '사기·도자기류와 내열·크리스탈 유리는 유리병과 재질이 달라 재활용되지 않아요. 불에 타지 않는 쓰레기로 따로 배출해요.',
+    keywords: ['도자기', '사기그릇', '그릇', '접시', '뚝배기', '머그컵', '내열유리', '내열 유리', '내열식기', '크리스탈', '유리 식기', '깨진 도자기', '돌솥'],
+    reason: '도자기와 내열유리는 재활용이 어렵고 불에 타지 않는 불연성 폐기물이에요. 유리병과 섞으면 안 돼요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_tips'],
+    sources: ['wg:도자기', 'wg:내열유리', 'seoul_guide'],
     result: {
       type: 'special_bag',
       steps: [
         '깨진 조각은 신문지 등으로 감싸주세요.',
-        '특수규격마대(불연성 쓰레기 마대)에 담아 배출해주세요.',
+        '불연성 종량제 특수마대에 담아 배출해주세요.',
       ],
-      cautions: ['양이 많거나 크기가 크면 대형폐기물로 처리할 수 있어요. 지역 기준을 확인해주세요.'],
+      cautions: ['크기가 큰 제품은 대형폐기물로 배출해요.'],
     },
   },
   {
@@ -670,15 +709,15 @@ export const ITEMS = [
     category: 'glass-metal',
     icon: 'can',
     keywords: ['캔', '맥주캔', '콜라캔', '음료캔', '참치캔', '통조림', '알루미늄캔', '철캔', '깡통'],
-    reason: '음료·식료품 캔은 내용물과 다른 재질을 제거하면 캔류로 재활용돼요.',
+    reason: '음료·식료품 캔은 내용물과 다른 재질을 제거하면 금속캔으로 재활용돼요.',
     verification: 'confirmed',
-    sources: ['seoul_guide'],
+    sources: ['wg:음료캔', 'seoul_guide'],
     result: {
       type: 'can',
       steps: [
         '내용물을 비우고 물로 헹궈주세요.',
         '플라스틱 뚜껑 등 다른 재질을 제거해주세요.',
-        '캔류로 배출해주세요.',
+        '금속캔 수거함에 배출해주세요.',
       ],
       cautions: ['페인트통처럼 내용물이 남은 캔은 특수규격마대 등 지역 기준에 따라 배출해요.'],
     },
@@ -689,14 +728,14 @@ export const ITEMS = [
     category: 'glass-metal',
     icon: 'spray',
     keywords: ['부탄가스', '가스통', '휴대용 가스', '스프레이', '에어로졸', '살충제', '헤어스프레이', '방향제', '픽서'],
-    reason: '가스를 완전히 비운 용기는 캔류로 재활용돼요. 가스가 남아 있으면 폭발 위험이 있어요.',
+    reason: '가스를 완전히 비운 용기는 금속캔으로 재활용돼요. 가스가 남아 있으면 폭발 위험이 있어요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_cosmetic'],
+    sources: ['wg:부탄가스', 'seoul_guide', 'seoul_cosmetic'],
     result: {
       type: 'can',
       steps: [
-        '화기가 없고 통풍이 잘 되는 곳에서 노즐을 눌러 가스를 완전히 빼주세요.',
-        '캔류로 배출해주세요.',
+        '화기가 없고 환기가 잘 되는 곳에서 노즐을 눌러 가스를 완전히 빼주세요.',
+        '금속캔 수거함에 배출해주세요.',
       ],
       cautions: [
         '내용물이 남아 있는 락카 등은 캔류가 아니라 특수규격마대 대상이에요. (서울시)',
@@ -710,13 +749,13 @@ export const ITEMS = [
     category: 'glass-metal',
     icon: 'foil',
     keywords: ['호일', '쿠킹호일', '쿠킹 호일', '은박', '알루미늄 포일', '포일'],
-    reason: '알루미늄 호일은 캔류가 아니라 종량제봉투에 버리는 품목이에요.',
+    reason: '선별장에서 알루미늄 캔은 골라내지만 얇은 호일은 선별이 어려워요. 그래서 금속캔이 아니라 종량제봉투에 버려요.',
     verification: 'confirmed',
-    sources: ['seoul_guide'],
+    sources: ['wg:알루미늄 호일', 'seoul_guide'],
     result: {
       type: 'general',
       steps: ['종량제봉투에 넣어 버려주세요.'],
-      cautions: ['환경부 요령은 \'지자체 조례에 따라\' 배출하도록 하고 있어 지역마다 다를 수 있어요.'],
+      cautions: ['금속캔·고철로 배출할 수 없어요.'],
     },
   },
 
@@ -726,11 +765,11 @@ export const ITEMS = [
     name: '칫솔',
     category: 'household',
     icon: 'brush',
-    keywords: ['칫솔', '치솔', '칫솔모', '플라스틱 칫솔', '대나무 칫솔'],
+    keywords: ['칫솔', '치솔', '칫솔모', '플라스틱 칫솔', '대나무 칫솔', '치간칫솔'],
     confusing: 7,
-    reason: '칫솔은 하나의 제품에 여러 재질이 섞여 있어 플라스틱으로 재활용되지 않아요.',
+    reason: '칫솔은 플라스틱, 솔, 고무 등이 섞인 복합재질이라 재질별로 나누기 어려워 재활용되지 않아요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_fake'],
+    sources: ['wg:칫솔', 'seoul_guide'],
     result: {
       type: 'general',
       steps: ['종량제봉투에 넣어 버려주세요.'],
@@ -742,23 +781,41 @@ export const ITEMS = [
     name: '아이스팩',
     category: 'household',
     icon: 'icepack',
-    keywords: ['아이스 팩', '냉매팩', '젤 아이스팩', '얼음팩', '아이스팩 젤'],
-    reason: '젤 아이스팩 내용물(고흡수성수지)은 수질을 오염시킬 수 있어 뜯지 말고 그대로 버려야 해요.',
+    keywords: ['아이스 팩', '냉매팩', '젤 아이스팩', '물 아이스팩', '얼음팩', '아이스팩 젤'],
+    reason: '젤 아이스팩 내용물(고흡수성수지)은 재활용이 안 되고 하수구에 버리면 안 돼요. 뜯지 말고 그대로 전용 수거함이나 종량제봉투에 버려요.',
     verification: 'confirmed',
-    sources: ['seoul_icepack', 'korea_holiday', 'gangnam_cup'],
+    sources: ['wg:젤 아이스팩', 'wg:물 아이스팩', 'seoul_icepack'],
     result: {
       type: 'general',
       steps: [
-        '깨끗하다면 아이스팩 전용 수거함에 넣거나 재사용해주세요.',
-        '그 외에는 뜯지 말고 종량제봉투에 넣어 버려주세요.',
+        '아이스팩 전용 수거함이 있다면 그대로 넣어주세요.',
+        '수거함이 없다면 뜯지 말고 종량제봉투에 넣어 버려주세요.',
       ],
       cautions: [
-        '물(또는 전분)로 된 아이스팩은 내용물을 하수구에 비우고, 케이스는 헹궈서 비닐류로 배출해요.',
-        '젤 내용물을 하수구나 변기에 버리지 마세요.',
-        '아이스팩 수거함은 일부 지역에서만 운영해요.',
+        '물로 된 아이스팩은 물을 하수구에 버리고, 포장재는 비닐류로 배출해요.',
+        '깨끗한 아이스팩은 재사용하는 것도 좋아요.',
       ],
     },
     related: ['cooler-bag'],
+  },
+  {
+    id: 'cooler-bag',
+    name: '보냉팩·보랭가방',
+    category: 'household',
+    icon: 'icepack',
+    keywords: ['보냉팩', '보냉백', '보랭가방', '보냉가방', '보냉 봉투', '은박 보냉', '은박 봉투', '보온보냉팩', '보온보랭팩', '보냉 파우치'],
+    reason: '은박(알루미늄), 발포지, 에어캡 등이 섞인 복합재질이라 재활용이 어려워요.',
+    verification: 'confirmed',
+    sources: ['wg:보온보냉팩', 'wg:보랭가방', 'korea_brief'],
+    result: {
+      type: 'general',
+      steps: ['안에 든 아이스팩과 내용물을 빼주세요.', '종량제봉투에 넣어 버려주세요.'],
+      cautions: [
+        '크기가 커서 종량제봉투에 안 들어가는 보랭가방은 대형폐기물로 배출해요.',
+        '일부 지자체는 조례로 보온보냉백을 비닐로 배출하도록 정하기도 해요.',
+      ],
+    },
+    related: ['ice-pack', 'paper-cooler-box'],
   },
   {
     id: 'wet-wipes',
@@ -766,13 +823,13 @@ export const ITEMS = [
     category: 'household',
     icon: 'wipes',
     keywords: ['물 티슈', '물휴지', '부직포', '화장지', '휴지', '키친타월'],
-    reason: '물티슈와 부직포는 종이처럼 보이지만 재활용이 어려워 종량제봉투 대상이에요.',
+    reason: '물티슈는 폴리에스터, 부직포 등으로 만들어져 종이처럼 보여도 재활용이 어려워요.',
     verification: 'confirmed',
-    sources: ['seoul_tips', 'seoul_guide'],
+    sources: ['wg:물티슈', 'seoul_guide'],
     result: {
       type: 'general',
       steps: ['종량제봉투에 넣어 버려주세요.'],
-      cautions: ['사용한 화장지도 종이류가 아니라 종량제봉투에 버려요.'],
+      cautions: ['물티슈 포장재는 비닐류로, 플라스틱 뚜껑(캡)은 플라스틱류로 배출해요.'],
     },
   },
   {
@@ -781,12 +838,13 @@ export const ITEMS = [
     category: 'household',
     icon: 'glove',
     keywords: ['고무 장갑', '주방장갑', '일회용 장갑', '고무호스', '호스', '식탁보', '비닐 식탁보'],
-    reason: '고무장갑은 비닐류처럼 보이지만 분리배출 대상이 아니에요. 고무호스, 비닐 식탁보도 마찬가지예요.',
+    reason: '가정용 고무 제품은 주로 두 가지 이상 재질이 섞인 합성 고무라 재활용이 어려워요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'seoul_rubber'],
+    sources: ['wg:고무장갑', 'seoul_guide'],
     result: {
       type: 'general',
       steps: ['종량제봉투에 넣어 버려주세요.'],
+      cautions: ['고무호스, 비닐 식탁보도 종량제봉투 대상이에요. (서울시)'],
     },
   },
   {
@@ -794,10 +852,10 @@ export const ITEMS = [
     name: '나무젓가락',
     category: 'household',
     icon: 'chopsticks',
-    keywords: ['젓가락', '일회용 젓가락', '나무 젓가락', '이쑤시개', '아이스크림 막대'],
-    reason: '나무젓가락은 재활용품이 아니라 종량제봉투에 버리는 품목이에요.',
+    keywords: ['나무 젓가락', '일회용 젓가락', '이쑤시개', '아이스크림 막대', '나무 숟가락'],
+    reason: '나무(목재) 젓가락은 재활용이 어려워 종량제봉투에 버려요.',
     verification: 'confirmed',
-    sources: ['gangnam_cup', 'seoul_toothpaste'],
+    sources: ['wg:젓가락(복합 재질)', 'gangnam_cup'],
     result: {
       type: 'general',
       steps: ['종량제봉투에 넣어 버려주세요.'],
@@ -810,13 +868,16 @@ export const ITEMS = [
     category: 'household',
     icon: 'umbrella',
     keywords: ['장우산', '접이식 우산', '양산', '고장난 우산'],
-    reason: '서울시 표준 기준은 우산을 플라스틱 분리배출이 아닌 대형폐기물로 처리하도록 안내해요.',
+    reason: '우산은 고철, 천, 플라스틱 등이 섞인 복합재질이에요. 재질별로 분리할 수 있으면 나눠서 배출하고, 어려우면 종량제봉투에 버려요.',
     verification: 'confirmed',
-    sources: ['seoul_guide'],
+    sources: ['wg:우산', 'seoul_guide'],
     result: {
-      type: 'bulky',
-      steps: ['구청·주민센터의 대형폐기물 신고 절차에 따라 배출해주세요.'],
-      cautions: [CHECK_LOCAL],
+      type: 'material',
+      steps: [
+        '분리할 수 있다면 살대 등 금속은 고철로, 비닐 천은 비닐류로 나눠주세요.',
+        '분리가 어렵다면 종량제봉투에, 봉투에 안 들어가면 대형폐기물로 배출해주세요.',
+      ],
+      cautions: ['서울시 표준 기준(2025)은 우산을 대형폐기물로 안내해요. 거주 지역 기준을 확인해주세요.'],
     },
   },
 
@@ -827,9 +888,9 @@ export const ITEMS = [
     category: 'etc',
     icon: 'blister',
     keywords: ['알약 포장', '알약포장재', '약 포장', '약 껍데기', 'ptp', '블리스터', '판포장', '약 포장지', '알루미늄 약 포장'],
-    reason: '알약 포장재는 플라스틱과 알루미늄 등 여러 재질이 섞여 분리가 어려워 종량제봉투에 버려요.',
+    reason: '알약 포장재는 윗면 플라스틱과 아랫면 알루미늄이 붙은 복합재질이라 재활용이 어려워요.',
     verification: 'confirmed',
-    sources: ['korea_policy', 'seoul_guide'],
+    sources: ['wg:알약 포장재', 'korea_policy', 'seoul_guide'],
     result: {
       type: 'general',
       steps: ['약을 다 꺼낸 빈 포장재만 종량제봉투에 넣어 버려주세요.'],
@@ -865,20 +926,19 @@ export const ITEMS = [
     name: '커피 캡슐',
     category: 'etc',
     icon: 'capsule',
-    keywords: ['커피캡슐', '캡슐커피', '캡슐 커피', '네스프레소', '카누 캡슐', '돌체구스토', '캡슐'],
-    reason: '제품마다 재질과 회수 방법이 달라요. 알루미늄 캡슐은 제조사가 우체국과 함께 회수하는 프로그램이 있어요.',
-    verification: 'needs-check',
-    sources: ['korea_capsule', 'wasteguide'],
+    keywords: ['커피캡슐', '캡슐커피', '캡슐 커피', '네스프레소', '카누 캡슐', '돌체구스토', '캡슐', '알루미늄 캡슐'],
+    reason: '알루미늄 커피 캡슐은 금속이라 뚜껑과 커피 찌꺼기를 제거하면 고철로 재활용돼요.',
+    verification: 'confirmed',
+    sources: ['wg:커피캡슐', 'korea_capsule'],
     result: {
-      type: 'check',
+      type: 'scrap',
       steps: [
-        '네스프레소 알루미늄 캡슐은 우편회수봉투에 담아 우체국 창구에 제출할 수 있어요.',
-        '회수 프로그램이 없는 캡슐은 생활폐기물 분리배출 누리집에서 배출 방법을 확인해주세요.',
+        '캡슐 뚜껑을 떼고 커피 찌꺼기를 빼주세요.',
+        '알루미늄 캡슐 용기만 고철 수거함에 배출해주세요.',
       ],
-      needsCheck: '회수 프로그램 대상이 아닌 캡슐(플라스틱 캡슐 등)의 배출 기준은 공식 자료에서 확인하지 못했어요.',
       cautions: [
-        '우편회수봉투는 네스프레소 공식 웹사이트에서 온라인 구매 시 함께 신청할 수 있어요.',
-        '동서식품 \'카누 바리스타\' 캡슐도 환경부·우정사업본부와의 협약으로 우체국 회수가 진행됐어요.',
+        '네스프레소 등 일부 제품은 우편회수봉투에 담아 우체국 창구나 에코우체통으로 회수해요. 이 경우 제조사 안내를 따라주세요.',
+        '플라스틱 재질 캡슐의 배출 기준은 공식 자료에서 확인하지 못했어요. 용기의 분리배출 표시를 확인해주세요.',
       ],
     },
   },
@@ -887,20 +947,17 @@ export const ITEMS = [
     name: '건전지',
     category: 'etc',
     icon: 'battery',
-    keywords: ['배터리', '폐건전지', 'aa', 'aaa', '건전지', '코인전지', '수은전지', '전지', '보조배터리', '충전지'],
-    reason: '건전지 등 전지류는 일반쓰레기나 캔류에 섞이지 않도록 전지류로 따로 배출해야 해요.',
+    keywords: ['배터리', '폐건전지', 'aa', 'aaa', '건전지', '코인전지', '수은전지', '전지', '보조배터리', '충전지', 'cr 건전지'],
+    reason: '전지 안의 전해질·아연 등이 새어 나오면 환경과 건강에 해로울 수 있어요. 다른 재활용품과 섞이지 않게 전지 수거함에 따로 버려야 해요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_wasteguide'],
+    sources: ['wg:건전지', 'korea_wasteguide', 'seoul_guide'],
     result: {
       type: 'battery',
       steps: [
         '제품에서 전지를 분리해주세요.',
-        '주민센터·아파트 등에 있는 전지류 수거함에 넣어주세요.',
+        '주민센터·아파트 등에 있는 전지 수거함에 넣어주세요.',
       ],
-      cautions: [
-        '전자제품 대리점, 시계점 등을 통해서도 회수해요.',
-        '생활폐기물 분리배출 누리집에서 가까운 전지 수거함 위치를 찾을 수 있어요.',
-      ],
+      cautions: ['생활폐기물 분리배출 누리집에서 가까운 전지 수거함 위치를 지도로 찾을 수 있어요.'],
     },
   },
   {
@@ -909,13 +966,13 @@ export const ITEMS = [
     category: 'etc',
     icon: 'lamp',
     keywords: ['폐형광등', '형광 등', '형광램프', '삼파장', '깨진 형광등'],
-    reason: '형광등에는 수은이 들어 있어 전용 수거함으로 따로 모아야 해요.',
+    reason: '형광등에는 수은이 들어 있어 형광등 전용 수거함으로 따로 모아야 해요.',
     verification: 'confirmed',
-    sources: ['seoul_guide'],
+    sources: ['wg:형광등', 'seoul_guide'],
     result: {
       type: 'lamp',
       steps: ['깨지지 않게 조심해서 옮겨주세요.', '형광등 전용 수거함에 넣어주세요.'],
-      cautions: ['깨진 형광등·LED 조명은 소량이면 종량제봉투, 많으면 특수규격마대에 배출해요. (서울시)'],
+      cautions: ['깨진 형광등은 신문지 등으로 충분히 감싸 불연성 종량제 마대로 배출해요. 서울시는 소량이면 종량제봉투도 가능하다고 안내해요.'],
     },
   },
   {
@@ -924,9 +981,9 @@ export const ITEMS = [
     category: 'etc',
     icon: 'bone',
     keywords: ['닭뼈', '생선뼈', '뼈', '조개껍데기', '조개 껍데기', '게 껍데기', '갑각류', '달걀 껍데기', '계란 껍데기', '알 껍질', '과일 씨', '복숭아 씨', '티백', '양파 껍질', '채소 뿌리'],
-    reason: '음식물처럼 보이지만 음식물쓰레기가 아니라 종량제봉투에 버려야 하는 것들이에요.',
+    reason: '음식물쓰레기는 사료·퇴비로 재활용되는데, 뼈처럼 딱딱한 것은 처리시설을 고장 낼 수 있어요. 그래서 음식물이 아니라 종량제봉투에 버려요.',
     verification: 'confirmed',
-    sources: ['seoul_guide', 'korea_holiday'],
+    sources: ['wg:닭뼈', 'wg:티백', 'seoul_guide'],
     result: {
       type: 'general',
       steps: ['물기를 빼고 종량제봉투에 넣어 버려주세요.'],
