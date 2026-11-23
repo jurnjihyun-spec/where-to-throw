@@ -2,6 +2,7 @@ import { useId, useMemo, useRef, useState } from 'react';
 import { searchItems } from '../lib/search.js';
 import { navigate, paths } from '../lib/router.js';
 import { DISPOSAL_TYPES } from '../data/categories.js';
+import Icon from './Icon.jsx';
 
 function SearchIcon() {
   return (
@@ -106,6 +107,7 @@ export default function SearchBar({ initialValue = '', autoFocus = false, compac
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => setOpen(false)}
               >
+                <span className="suggest__icon"><Icon name={item.icon} size={20} /></span>
                 <span className="suggest__name">{item.name}</span>
                 <span className="suggest__type">{previewType(item)}</span>
               </a>

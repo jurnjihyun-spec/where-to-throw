@@ -72,8 +72,12 @@ export function searchItems(rawQuery, limit = 20) {
     if (score > 2) results.push({ item, score });
   }
 
+  results.sort((a, b) => b.score - a.score);
+  // 확실한 결과가 있으면, 글자 유사도로만 걸린 약한 결과는 숨김
+  const top = results[0]?.score || 0;
+  const cutoff = top >= 70 ? 45 : 0;
   return results
-    .sort((a, b) => b.score - a.score)
+    .filter((r) => r.score >= cutoff)
     .slice(0, limit)
     .map((r) => r.item);
 }
@@ -86,6 +90,7 @@ export function getItemsByCategory(categoryId) {
   return ITEMS.filter((item) => item.category === categoryId);
 }
 
-export function getPopularItems() {
-  return ITEMS.filter((item) => item.popular);
+// 메인 '많이 헷갈리는 물품' (confusing 값 순서)
+export function getConfusingItems() {
+  return ITEMS.filter((item) => item.confusing).sort((a, b) => a.confusing - b.confusing);
 }

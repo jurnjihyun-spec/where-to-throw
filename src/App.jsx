@@ -40,7 +40,7 @@ export default function App() {
       <footer className="footer">
         <div className="container">
           <p>분리배출 기준은 지자체마다 다를 수 있습니다. 거주 지역의 안내를 함께 확인해주세요.</p>
-          <p>환경부 및 지자체 공식 자료를 참고해 작성했으며, 확인되지 않은 정보는 ‘확인 필요’로 표시했습니다.</p>
+          <p>환경부 및 지자체 공식 자료를 참고해 작성했으며, 확인되지 않은 정보는 ‘추가 확인 필요’로 표시했습니다.</p>
         </div>
       </footer>
     </div>
