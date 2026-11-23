@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // =====================================================================
-// AIP02 Round 1 — 발표용 랜딩 페이지
+// AIP02 Round 1 · 발표용 랜딩 페이지
 // - 섹션 순서가 곧 발표 순서: 문제 → 원인 → 솔루션 → 가설 → 검증 → 비교 → 결정
 // - 사용자 발언은 원문 그대로 (생략은 '…'), 측정하지 않은 수치는 쓰지 않음
 // - 발표 시 ↓ / → / PageDown: 다음 섹션, ↑ / ← / PageUp: 이전 섹션, F: 전체화면
@@ -112,7 +112,7 @@ export default function App() {
       <section className="hero" id="top" data-stop>
         <div className="wrap hero__grid">
           <div className="hero__copy">
-            <p className="hero__meta">AIP02 Round 1 — 전지현</p>
+            <p className="hero__meta">AIP02 Round 1 · 전지현</p>
             <h1 className="hero__title">알아도,<br />버릴 땐<br /><mark>헷갈린다.</mark></h1>
             <p className="hero__lead">
               일상적인 물품의 배출 유형을 확신하기 어렵다는 문제를 재정의하고,
@@ -134,7 +134,7 @@ export default function App() {
             {[
               ['문제', '익숙한 생활용품도 일반쓰레기인지 재활용인지 확신하지 못한다'],
               ['솔루션', '배출 유형 · 판단 이유 · 공식 출처를 먼저, 필요할 때만 조건 질문'],
-              ['검증', '20대 3명 — 탐색 편의와 출처 신뢰에 긍정적, GPT의 입력 편의는 경쟁 요소'],
+              ['검증', '20대 3명, 탐색 편의와 출처 신뢰에 긍정적, GPT의 입력 편의는 경쟁 요소'],
               ['결정', '가설 유지 → R2: 헷갈리는 순간 이 서비스를 실제로 고를까?'],
             ].map(([k, v], i) => (
               <li key={k}><span>{String(i + 1).padStart(2, '0')} {k}</span><p>{v}</p></li>
@@ -238,12 +238,12 @@ export default function App() {
               <div className="flow__start">물품 검색<small>검색창 · 카테고리</small></div>
               <div className="flow__q">추가 조건이 필요한 물품인가?</div>
               <div className="flow__case">
-                <p className="flow__k">CASE A — 아니오 <span>등록 물품 44개 중 37개</span></p>
+                <p className="flow__k">CASE A · 아니오 <span>등록 물품 44개 중 37개</span></p>
                 <p className="flow__path">바로 결과 → 배출 유형 → 판단 이유 → 공식 출처</p>
                 <p className="flow__ex">즉석밥 용기 · 과일 포장망 · 뽁뽁이 · 영수증 · 칫솔 …</p>
               </div>
               <div className="flow__case flow__case--b">
-                <p className="flow__k">CASE B — 예 <span>44개 중 7개</span></p>
+                <p className="flow__k">CASE B · 예 <span>44개 중 7개</span></p>
                 <p className="flow__path">조건 질문 1개 → 조건에 맞는 배출 방법</p>
                 <dl>
                   <dt>오염·세척 가능 여부</dt><dd>배달 용기, 피자 박스, 스티로폼, 랩, 소스 통</dd>
@@ -298,20 +298,16 @@ export default function App() {
               <h3>검증 설계</h3>
               <dl className="spec">
                 <dt>과업</dt><dd>햇반 용기 · 과일 포장망 · 뽁뽁이를 각각 어떻게 버려야 하는지 사이트에서 확인</dd>
-                <dt>대상</dt><dd>20대 여성 3명 (05년생) — 1차 A·B, 추가 C</dd>
-                <dt>방식</dt><dd>A·B 카카오톡 사용 전·후 질문, C 구두 인터뷰</dd>
+                <dt>대상</dt><dd>20대 여성 3명 (05년생)<br />1차 A·B, 추가 C</dd>
                 <dt>흐름</dt><dd>사용 전 예상·평소 습관 → 사이트 사용 → 탐색·신뢰·비교·개선점</dd>
               </dl>
             </div>
             <div>
-              <h3>측정한 것 / 하지 않은 것</h3>
+              <h3>확인한 것</h3>
               <ul className="measure">
                 <li className="y">사용 전 예상과 평소 행동 (진술)</li>
                 <li className="y">사용 후 탐색 · 신뢰 평가 (진술)</li>
                 <li className="y">GPT · 네이버 대비 인식</li>
-                <li className="n">과업 소요 시간 · 성공률</li>
-                <li className="n">클릭 로그 · 화면 녹화</li>
-                <li className="n">실제 분리배출 행동 변화</li>
               </ul>
             </div>
           </div>
@@ -321,29 +317,29 @@ export default function App() {
       {/* ============================================================ 05 REAL VOICE */}
       <section className="sec sec--dark" id="voice" data-stop>
         <div className="wrap">
-          <SectionHead no="05" kicker="Real Voice — User Validation" title="세 사람 모두 판단이 어렵다고 했고, 출처가 있는 안내를 믿을 만하다고 했다." />
+          <SectionHead no="05" kicker="Real Voice · User Validation" title="세 사람 모두 판단이 어렵다고 했고, 출처가 있는 안내를 믿을 만하다고 했다." />
 
           <div className="voices">
             {[
               {
-                who: '박소은', meta: '05년생 · 여성 · 1차 · 카카오톡', init: 'A',
+                who: '박0은', meta: '05년생 · 여성 · 1차 검증', init: 'A',
                 before: ['잘 모르겠음. 보통 셋다 플라스틱에 그냥 버림', '그냥 감으로 버림. 경비원분들이 분리 도와주심.'],
                 after: ['쉽게 찾을수잇엇어요 최곤디?', '근거자료 밑에 있는거 보니 … 근거자료 굳이확인안하고믿을듯 사이트에대한신뢰감?', '페이지들어가자마자 원하는 정보 > 어디에 버려야하는지 를 딱 강조해서 잘 보이게 되어있는점이 가장 좋은 것 같고 …'],
                 insight: '출처 표시가 사이트 전체에 대한 신뢰로 확장',
               },
               {
-                who: '장유정', meta: '05년생 · 여성 · 1차 · 카카오톡', init: 'B',
+                who: '장0정', meta: '05년생 · 여성 · 1차 검증', init: 'B',
                 before: ['햇반용기: 재활용, 그티로폼 드물망: 재활용..?, 뽁뽁이: 재활용', 'Gpt, 인터넷 검색까지 하기엔 … 귀찮. 차라리 걍 일쓰에 다 넣어서 태워버리겟 단 생각.'],
                 after: ['앜 과일망 틀렷다', '… gpt 보단 좀 더 이 사이트가 믿을만 할 듯 출처 보여서'],
                 note: '과일 그물망은 공식 기준상 종량제봉투로, 사용 전 예상(재활용..?)과 다름. \'틀렸다\'는 사용자 본인의 인식.',
                 insight: 'GPT의 편의와 별개로 출처 기반 신뢰에 긍정적',
               },
               {
-                who: '김수영', meta: '05년생 · 여성 · 추가 · 구두 인터뷰', init: 'C',
+                who: '김0영', meta: '05년생 · 여성 · 추가 검증', init: 'C',
                 before: ['햇반은 플라스틱에 버리고, 그물망이랑 뽁뽁이는 일쓰에 버림.', '시간 많을 땐 검색하고 바쁠 땐 그냥 버려'],
                 after: ['출처까지 줘서 믿을만 한 듯?', '다른 내용보다 어디에 버려야 하는지 바로 알려주는게 좋아.'],
                 note: '공식 기준 대비: 과일 그물망(종량제봉투)은 일치, 뽁뽁이(비닐류)는 다름.',
-                insight: '사용자 A와 같은 방향 — 출처 신뢰 + 결과를 바로 보여주는 구성 선호',
+                insight: '사용자 A와 같은 방향: 출처 신뢰 + 결과를 바로 보여주는 구성 선호',
               },
             ].map((v) => (
               <article key={v.who} className="voice">
@@ -370,7 +366,7 @@ export default function App() {
               <li><b>C</b> "시간 많을 땐 검색하고 바쁠 땐 그냥 버려"</li>
             </ul>
           </div>
-          <p className="note note--dark">인용은 원문 그대로(맞춤법 포함)이며 '…'는 생략 표시. A·B는 카카오톡 응답, C는 구두 인터뷰 기록. 별점·점수는 수집하지 않았다.</p>
+          <p className="note note--dark">인용은 원문 그대로(맞춤법 포함)이며 '…'는 생략 표시.</p>
         </div>
       </section>
 
@@ -382,10 +378,10 @@ export default function App() {
           <div className="cmp">
             <div className="cmp__head"><span>예상</span><span>실제 반응</span><span>판단</span></div>
             {[
-              { k: '예상 1', e: '익숙한 물품이라도 배출 유형을 확신하지 못할 것이다', o: ['A — 세 물품 모두 "잘 모르겠음"', 'B — 과일 포장망 "재활용..?"', 'C — 뽁뽁이를 "일쓰에" (공식 기준: 비닐류)'], j: '지지', d: '문제 가설을 지지하는 정성적 반응' },
-              { k: '예상 2', e: '배출 유형을 명확히 보여주면 필요한 정보를 쉽게 찾을 것이다', o: ['A — "쉽게 찾을수잇엇어요", 배출 유형 강조를 가장 좋은 점으로', 'B — 사이트 확인 후 기존 판단과 다른 결과를 인식', 'C — "어디에 버려야 하는지 바로 알려주는게 좋아"'], j: '지지', d: '탐색·가독성에 긍정적 (시간·성공률은 미측정)' },
-              { k: '예상 3', e: '공식 근거를 제공하면 안내를 더 신뢰할 것이다', o: ['A — 근거자료를 보고 "사이트에 대한 신뢰감"', 'B — GPT보다 믿을 만한 이유로 "출처 보여서"', 'C — "출처까지 줘서 믿을만 한 듯?"'], j: '지지', d: '출처 기반 신뢰 가설을 지지하는 반응' },
-              { k: '예상 밖', e: 'GPT는 여전히 강력한 대안이다', o: ['A — "지피티가 편하긴하죠… 사진 찍어서 이거 어떻게해? 라고 … 물어볼 수 있어서!!!"', 'B — "Gpt.내가 원하는 답변만 간결하게 보이니까"'], j: '추가 검증', d: '입력·접근 편의는 GPT가 강함 → 다음 라운드에서 검증', next: true },
+              { k: '예상 1', e: '익숙한 물품이라도 배출 유형을 확신하지 못할 것이다', o: ['A: 세 물품 모두 "잘 모르겠음"', 'B: 과일 포장망 "재활용..?"', 'C: 뽁뽁이를 "일쓰에" (공식 기준: 비닐류)'], j: '지지', d: '문제 가설을 지지하는 정성적 반응' },
+              { k: '예상 2', e: '배출 유형을 명확히 보여주면 필요한 정보를 쉽게 찾을 것이다', o: ['A: "쉽게 찾을수잇엇어요", 배출 유형 강조를 가장 좋은 점으로', 'B: 사이트 확인 후 기존 판단과 다른 결과를 인식', 'C: "어디에 버려야 하는지 바로 알려주는게 좋아"'], j: '지지', d: '탐색·가독성에 긍정적 (시간·성공률은 미측정)' },
+              { k: '예상 3', e: '공식 근거를 제공하면 안내를 더 신뢰할 것이다', o: ['A: 근거자료를 보고 "사이트에 대한 신뢰감"', 'B: GPT보다 믿을 만한 이유로 "출처 보여서"', 'C: "출처까지 줘서 믿을만 한 듯?"'], j: '지지', d: '출처 기반 신뢰 가설을 지지하는 반응' },
+              { k: '예상 밖', e: 'GPT는 여전히 강력한 대안이다', o: ['A: "지피티가 편하긴하죠… 사진 찍어서 이거 어떻게해? 라고 … 물어볼 수 있어서!!!"', 'B: "Gpt.내가 원하는 답변만 간결하게 보이니까"'], j: '추가 검증', d: '입력·접근 편의는 GPT가 강함 → 다음 라운드에서 검증', next: true },
             ].map((r) => (
               <div key={r.k} className={`cmp__row ${r.next ? 'is-next' : ''}`}>
                 <div className="cmp__e"><b>{r.k}</b>{r.e}</div>
@@ -402,7 +398,7 @@ export default function App() {
       <section className="sec sec--gray" id="decision" data-stop>
         <div className="wrap">
           <SectionHead no="07" kicker="Decision & Next Step" title="가설을 바꾸지 않고 다른 사용자에게 다시 확인했다. 다음은 '실제로 이 서비스를 고르는가'를 검증한다.">
-            과제 원칙 — "예상대로였다면 다른 사용자·조건에서도 같은지 살펴봅니다." 1차 반응이 예상과 부합했기 때문에 전면 피봇 대신 추가 사용자로 일관성을 확인했다.
+            과제 원칙: "예상대로였다면 다른 사용자·조건에서도 같은지 살펴봅니다." 1차 반응이 예상과 부합했기 때문에 전면 피봇 대신 추가 사용자로 일관성을 확인했다.
           </SectionHead>
 
           <ol className="steps">
@@ -422,7 +418,7 @@ export default function App() {
               <p className="next__k">Round 2 핵심 질문</p>
               <p className="next__q">사용자는 실제로 분리배출이 헷갈리는 순간, <mark>GPT나 검색엔진 대신 이 서비스를 선택할 것인가?</mark></p>
               <p className="next__why">세 사람 모두 확인 없이 감이나 일반쓰레기로 처리하는 경우가 있었고, B·C는 그 이유로 번거로움과 시간을 들었다. 믿을 수 있는 것만으로는 부족하고, 고를 만큼 간편해야 한다.</p>
-              <p className="next__label">검증 예정 항목 — 이번 라운드에서는 검증하지 않음</p>
+              <p className="next__label">검증 예정 항목 (이번 라운드에서는 검증하지 않음)</p>
               <ul className="next__list">
                 <li>실제 사용 상황에서의 서비스 선택</li>
                 <li>GPT 대비 과업 완료 시간</li>
@@ -438,7 +434,7 @@ export default function App() {
             </aside>
           </div>
 
-          <p className="limits"><b>한계</b> 사용자 3명 · 정성 진술 중심 · 카카오톡과 구두 인터뷰 기반 (클릭 로그·소요 시간·화면 녹화 없음). 결과를 시장 수요로 일반화하지 않는다.</p>
+          <p className="limits"><b>한계</b> 사용자 3명 · 정성 진술 중심. 결과를 시장 수요로 일반화하지 않는다.</p>
         </div>
       </section>
 
