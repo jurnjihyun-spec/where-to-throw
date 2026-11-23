@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img"><title>스티로폼 박스</title>
+<ellipse cx="80" cy="132" rx="60" ry="6" fill="#000" opacity=".08"/>
+<path d="M22 58l58-22 58 22v58l-58 18-58-18z" fill="#fbfbf9" stroke="#d2d3cd" stroke-width="2"/>
+<path d="M22 58l58 20 58-20M80 78v56" stroke="#d2d3cd" stroke-width="2" fill="none"/>
+<path d="M22 58l58 20v56l-58-18z" fill="#f1f1ed"/>
+<path d="M22 58l58 20 58-20v10l-58 20-58-20z" fill="#e9e9e4" stroke="#d2d3cd" stroke-width="1.5"/>
+<g fill="#dcdcd5"><circle cx="40" cy="96" r="1.5"/><circle cx="52" cy="104" r="1.5"/><circle cx="64" cy="98" r="1.5"/><circle cx="46" cy="110" r="1.5"/><circle cx="96" cy="100" r="1.5"/><circle cx="110" cy="94" r="1.5"/><circle cx="122" cy="102" r="1.5"/><circle cx="104" cy="112" r="1.5"/></g>
+<rect x="92" y="96" width="30" height="16" rx="2" fill="#fff" stroke="#cfcfc9" stroke-width="1.5" transform="skewY(-18) translate(0 34)"/>
+</svg>

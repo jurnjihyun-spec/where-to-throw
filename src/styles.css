@@ -115,19 +115,35 @@ h1, h2, p { margin: 0; }
 }
 .chip:hover { background: var(--green-100); color: var(--green-900); }
 
-.confuse-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.confuse-card {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  min-height: 96px; padding: 14px 4px 12px;
-  border-radius: var(--radius-md); background: var(--gray-100);
-  text-align: center; transition: background 0.15s;
+.photo-find__head { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+.photo-find__head .section__title { margin-bottom: 0; }
+.photo-find__desc { font-size: 14px; color: var(--gray-500); }
+.photo-find__swipe { color: var(--green-700); font-weight: 600; }
+.photo-find__note { margin-top: 8px; font-size: 12px; color: var(--gray-500); }
+
+/* 모바일: 2줄 가로 스크롤 (다음 카드가 살짝 보이게) */
+.photo-list {
+  list-style: none; margin: 0 -20px; padding: 2px 20px 8px;
+  display: grid; grid-template-rows: repeat(2, auto); grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 16px) / 3.3); gap: 8px;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 20px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
-.confuse-card:hover { background: var(--green-100); }
-.confuse-card__icon {
-  width: 46px; height: 46px; display: grid; place-items: center;
-  border-radius: 50%; background: #fff; color: var(--green-700);
+.photo-list::-webkit-scrollbar { display: none; }
+.photo-list li { scroll-snap-align: start; }
+.photo-card {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%;
+  padding: 8px 6px 10px; border-radius: var(--radius-md); background: var(--gray-100);
+  text-align: center; transition: background 0.15s, transform 0.15s;
 }
-.confuse-card__name { font-size: 13px; font-weight: 600; line-height: 1.3; color: var(--gray-900); }
+.photo-card:hover { background: var(--green-100); }
+.photo-card:active { transform: scale(0.97); }
+.photo-card__img {
+  width: 100%; aspect-ratio: 1; border-radius: 12px; background: #fff;
+  display: grid; place-items: center; overflow: hidden;
+}
+.photo-card__img img { width: 88%; height: 88%; object-fit: contain; }
+.photo-card__name { font-size: 13px; font-weight: 600; line-height: 1.3; color: var(--gray-900); word-break: keep-all; }
 
 .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .cat-card {
@@ -294,8 +310,12 @@ h1, h2, p { margin: 0; }
   .hero { padding: 72px 0 8px; text-align: center; }
   .hero__sub { font-size: 18px; margin-bottom: 32px; }
   .cat-grid { grid-template-columns: repeat(3, 1fr); }
-  .confuse-card { min-height: 108px; }
-  .confuse-card__name { font-size: 14px; }
+  .photo-list {
+    margin: 0; padding: 0; overflow: visible;
+    grid-template-rows: none; grid-auto-flow: row; grid-template-columns: repeat(6, 1fr);
+  }
+  .photo-card__name { font-size: 14px; }
+  .photo-find__swipe { display: none; }
   .chips { justify-content: flex-start; }
   .tabs { margin: 16px 0 0; padding: 2px 0 4px; flex-wrap: wrap; }
   .actions { flex-direction: row-reverse; }

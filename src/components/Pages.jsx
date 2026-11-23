@@ -1,6 +1,6 @@
 import { CATEGORIES, DISPOSAL_TYPES, GROUPS } from '../data/categories.js';
 import { getSource } from '../data/sources.js';
-import { getConfusingItems, getItem, getItemsByCategory, searchItems } from '../lib/search.js';
+import { getPhotoItems, getItem, getItemsByCategory, searchItems } from '../lib/search.js';
 import { paths } from '../lib/router.js';
 import SearchBar from './SearchBar.jsx';
 import Icon from './Icon.jsx';
@@ -58,7 +58,7 @@ function CategoryGrid() {
 
 // ------------------------------------------------------------------ 메인
 export function HomePage() {
-  const confusing = getConfusingItems();
+  const photoItems = getPhotoItems();
   return (
     <>
       <section className="hero">
@@ -67,16 +67,35 @@ export function HomePage() {
         <SearchBar />
       </section>
 
-      <section className="section">
-        <h2 className="section__title">많이 헷갈리는 물품</h2>
-        <div className="confuse-grid">
-          {confusing.map((item) => (
-            <a key={item.id} className="confuse-card" href={paths.item(item.id)}>
-              <span className="confuse-card__icon"><Icon name={item.icon} size={30} /></span>
-              <span className="confuse-card__name">{item.name}</span>
-            </a>
-          ))}
+      <section className="section photo-find" aria-labelledby="photo-find-title">
+        <div className="photo-find__head">
+          <h2 className="section__title" id="photo-find-title">
+            사진으로 물품 찾기 <span className="count">{photoItems.length}</span>
+          </h2>
+          <p className="photo-find__desc">
+            이름을 몰라도 괜찮아요. 비슷하게 생긴 물품을 눌러보세요.
+            <span className="photo-find__swipe"> 옆으로 넘기면 더 있어요.</span>
+          </p>
         </div>
+        <ul className="photo-list">
+          {photoItems.map((item) => (
+            <li key={item.id}>
+              <a className="photo-card" href={paths.item(item.id)}>
+                <span className="photo-card__img">
+                  <img
+                    src={`${import.meta.env.BASE_URL}images/items/${item.id}.svg`}
+                    alt=""
+                    width="160"
+                    height="160"
+                    loading="lazy"
+                  />
+                </span>
+                <span className="photo-card__name">{item.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className="photo-find__note">그림은 이해를 돕기 위한 예시예요. 실제 제품과 모양이 다를 수 있어요.</p>
       </section>
 
       <section className="section">

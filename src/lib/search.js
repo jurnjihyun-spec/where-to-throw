@@ -90,7 +90,7 @@ export function getItemsByCategory(categoryId) {
   return ITEMS.filter((item) => item.category === categoryId);
 }
 
-// 메인 '많이 헷갈리는 물품' (confusing 값 순서)
-export function getConfusingItems() {
-  return ITEMS.filter((item) => item.confusing).sort((a, b) => a.confusing - b.confusing);
+// 메인 '사진으로 물품 찾기' (photo 값 순서)
+export function getPhotoItems() {
+  return ITEMS.filter((item) => item.photo).sort((a, b) => a.photo - b.photo);
 }

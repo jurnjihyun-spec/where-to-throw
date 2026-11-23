@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img"><title>치약 튜브</title>
+<ellipse cx="80" cy="132" rx="60" ry="5" fill="#000" opacity=".08"/>
+<g transform="rotate(-12 80 80)">
+<path d="M26 60h92l8 6v28l-8 6H26l-4-4V64z" fill="#fff" stroke="#cfd6dc" stroke-width="2"/>
+<path d="M22 64v32M26 60v40" stroke="#cfd6dc" stroke-width="2"/>
+<path d="M34 64h70v32H34z" fill="#2f7fd1"/>
+<path d="M34 86h70v10H34z" fill="#e5463b"/>
+<text x="69" y="81" text-anchor="middle" font-size="11" font-family="sans-serif" font-weight="800" fill="#fff">치약</text>
+<rect x="126" y="68" width="16" height="24" rx="3" fill="#f0f2f4" stroke="#cfd6dc" stroke-width="2"/>
+<path d="M130 68v24M134 68v24M138 68v24" stroke="#dfe4e8" stroke-width="1.4"/>
+</g>
+</svg>
