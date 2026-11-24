@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/make-qr.js",
+    "prebuild": "node scripts/make-qr.js && node scripts/make-script-page.js",
     "build": "vite build",
     "preview": "vite preview"
   },
