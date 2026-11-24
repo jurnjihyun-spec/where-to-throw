@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img"><title>아이스팩</title>
+<ellipse cx="80" cy="132" rx="54" ry="6" fill="#000" opacity=".08"/>
+<rect x="28" y="34" width="104" height="92" rx="14" fill="#dceefa" stroke="#9cc6e3" stroke-width="2"/>
+<rect x="28" y="34" width="104" height="14" rx="7" fill="#c3e0f3" stroke="#9cc6e3" stroke-width="2"/>
+<path d="M28 116h104" stroke="#9cc6e3" stroke-width="2"/>
+<path d="M42 72c10-8 18 8 28 0s18 8 28 0 18 8 26 2" stroke="#7fb8dc" stroke-width="3" fill="none" stroke-linecap="round"/>
+<g stroke="#4f9bd0" stroke-width="3" stroke-linecap="round"><path d="M80 82v26M69 88l22 14M91 88l-22 14"/></g>
+<text x="80" y="62" text-anchor="middle" font-size="10" font-family="sans-serif" font-weight="700" fill="#3e88bf">ICE PACK</text>
+</svg>

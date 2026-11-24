@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img"><title>즉석밥 용기</title>
+<ellipse cx="80" cy="128" rx="54" ry="7" fill="#000" opacity=".08"/>
+<path d="M28 66h104l-9 52a10 10 0 0 1-10 8H47a10 10 0 0 1-10-8z" fill="#f7f7f4" stroke="#c9cdc8" stroke-width="2"/>
+<path d="M35 84h90" stroke="#e3e6e2" stroke-width="3"/>
+<rect x="22" y="56" width="116" height="12" rx="6" fill="#fff" stroke="#c9cdc8" stroke-width="2"/>
+<path d="M30 57c10-14 90-14 100 0" fill="#e9f1fb" stroke="#9fb7d4" stroke-width="2"/>
+<rect x="52" y="44" width="56" height="12" rx="3" fill="#e04b3c" transform="rotate(-6 80 50)"/>
+<text x="80" y="54" text-anchor="middle" font-size="9" font-family="sans-serif" font-weight="700" fill="#fff" transform="rotate(-6 80 50)">즉석밥</text>
+<g fill="#fff" stroke="#e6e2d6" stroke-width="1"><ellipse cx="62" cy="100" rx="5" ry="3"/><ellipse cx="80" cy="104" rx="5" ry="3"/><ellipse cx="96" cy="98" rx="5" ry="3"/></g>
+<text x="80" y="117" text-anchor="middle" font-size="8" font-family="sans-serif" fill="#8b918d">OTHER</text>
+</svg>

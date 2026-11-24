@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img"><title>영수증</title>
+<ellipse cx="80" cy="138" rx="40" ry="5" fill="#000" opacity=".08"/>
+<path d="M44 20h72v112l-6-5-6 5-6-5-6 5-6-5-6 5-6-5-6 5-6-5-6 5-6-5-6 5z" fill="#fff" stroke="#d6d6d0" stroke-width="2" transform="rotate(4 80 80)"/>
+<g transform="rotate(4 80 80)" fill="#c3c6c4">
+<rect x="58" y="32" width="44" height="6" rx="2" fill="#8d9390"/>
+<rect x="54" y="48" width="32" height="4" rx="2"/><rect x="92" y="48" width="14" height="4" rx="2"/>
+<rect x="54" y="58" width="28" height="4" rx="2"/><rect x="92" y="58" width="14" height="4" rx="2"/>
+<rect x="54" y="68" width="34" height="4" rx="2"/><rect x="92" y="68" width="14" height="4" rx="2"/>
+<rect x="54" y="84" width="52" height="2" rx="1"/>
+<rect x="54" y="92" width="22" height="6" rx="2" fill="#6f7572"/><rect x="88" y="92" width="18" height="6" rx="2" fill="#6f7572"/>
+<g fill="#4c514e"><rect x="56" y="108" width="2" height="12"/><rect x="60" y="108" width="1" height="12"/><rect x="63" y="108" width="3" height="12"/><rect x="68" y="108" width="1" height="12"/><rect x="71" y="108" width="2" height="12"/><rect x="75" y="108" width="1" height="12"/><rect x="78" y="108" width="3" height="12"/><rect x="83" y="108" width="1" height="12"/><rect x="86" y="108" width="2" height="12"/><rect x="90" y="108" width="1" height="12"/><rect x="93" y="108" width="3" height="12"/><rect x="98" y="108" width="2" height="12"/><rect x="102" y="108" width="1" height="12"/></g></g>
+</svg>

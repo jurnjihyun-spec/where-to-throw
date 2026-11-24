@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img"><title>칫솔</title>
+<ellipse cx="80" cy="132" rx="56" ry="5" fill="#000" opacity=".08"/>
+<g transform="rotate(-35 80 80)">
+<rect x="22" y="74" width="92" height="14" rx="7" fill="#43a3d6"/>
+<rect x="34" y="77" width="44" height="8" rx="4" fill="#bfe3f4"/>
+<rect x="108" y="76" width="34" height="10" rx="4" fill="#43a3d6"/>
+<g fill="#f6f7f8" stroke="#d3d8dc" stroke-width="1"><rect x="112" y="60" width="5" height="17" rx="2"/><rect x="119" y="58" width="5" height="19" rx="2"/><rect x="126" y="58" width="5" height="19" rx="2"/><rect x="133" y="60" width="5" height="17" rx="2"/></g>
+<g fill="#7cc6e9"><rect x="119" y="58" width="5" height="6" rx="2"/><rect x="126" y="58" width="5" height="6" rx="2"/></g>
+</g>
+</svg>

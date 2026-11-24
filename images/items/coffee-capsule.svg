@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img"><title>커피 캡슐</title>
+<ellipse cx="80" cy="128" rx="48" ry="6" fill="#000" opacity=".08"/>
+<g transform="translate(-8 0)">
+<path d="M46 52h40l-6 46H52z" fill="#8a5a8f"/>
+<path d="M46 52h40l-2 14H48z" fill="#a874ad"/>
+<ellipse cx="66" cy="52" rx="24" ry="6" fill="#d9d9de" stroke="#b9bac0" stroke-width="2"/>
+<ellipse cx="66" cy="99" rx="14" ry="3" fill="#6d4471"/></g>
+<g transform="translate(30 26)">
+<path d="M46 52h40l-6 46H52z" fill="#c9a03c"/>
+<path d="M46 52h40l-2 14H48z" fill="#ddb653"/>
+<ellipse cx="66" cy="52" rx="24" ry="6" fill="#e3e3e6" stroke="#bfc0c5" stroke-width="2"/>
+<ellipse cx="66" cy="99" rx="14" ry="3" fill="#a8822a"/></g>
+</svg>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#0d1210" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<title>발표 스크립트 · AIP02 R1</title>
+<style>
+  :root { --ink:#0d1210; --mute:#5f6a65; --line:#e3e7e4; --green:#1f7a52; --marker:#bdeccf; --bg:#f3f5f3; }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 64px; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; font-family: 'Pretendard Variable', Pretendard, -apple-system, system-ui, 'Apple SD Gothic Neo', sans-serif; color: var(--ink); background: #fff; font-size: 17px; line-height: 1.7; word-break: keep-all; overflow-wrap: anywhere; }
+  header.top { padding: 22px 18px 14px; }
+  header.top h1 { margin: 0; font-size: 21px; line-height: 1.4; letter-spacing: -0.02em; }
+  header.top p { margin: 4px 0 0; font-size: 13px; color: var(--mute); }
+  nav { position: sticky; top: 0; z-index: 5; display: flex; gap: 6px; overflow-x: auto; padding: 10px 14px; background: rgba(255,255,255,.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { flex-shrink: 0; padding: 7px 12px; border-radius: 999px; background: var(--bg); color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; }
+  main { padding: 0 18px 60px; }
+  .intro { padding: 6px 0 10px; }
+  section { padding: 22px 0 8px; border-top: 1px solid var(--line); }
+  h2 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; font-size: 20px; line-height: 1.4; letter-spacing: -0.02em; }
+  .time { flex-shrink: 0; padding: 2px 9px; border-radius: 6px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  p { margin: 0 0 10px; }
+  p.lead { padding: 12px 14px; border-left: 4px solid var(--green); background: var(--bg); font-weight: 600; border-radius: 0 6px 6px 0; }
+  p.lead b { color: var(--green); }
+  ul { margin: 0 0 10px; padding-left: 20px; }
+  ul ul { margin: 2px 0 4px; color: var(--mute); }
+  li { margin: 4px 0; }
+  q { quotes: '“' '”'; background: linear-gradient(transparent 60%, var(--marker) 60%); }
+  a { color: var(--green); word-break: break-all; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 15px; }
+  th, td { padding: 8px 6px; border-bottom: 1px solid var(--line); text-align: left; }
+  th { font-size: 13px; color: var(--mute); }
+  td:nth-child(n+2), th:nth-child(n+2) { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .top-btn { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; text-decoration: none; font-size: 18px; box-shadow: 0 6px 16px rgba(0,0,0,.2); }
+  @media (min-width: 720px) { main, header.top { max-width: 720px; margin: 0 auto; } body { font-size: 18px; } }
+</style>
+</head>
+<body>
+<header class="top"><h1>AIP02 Round 1 발표 스크립트: 어디에 버리지? (5분)</h1><p>휴대폰용 발표 스크립트 · 원본: presentation-script.md</p></header>
+<nav><a href="#s1">Hero · 요약</a><a href="#s2">01 문제</a><a href="#s3">02 원인</a><a href="#s4">03 솔루션</a><a href="#s5">04 가설</a><a href="#s6">05 검증</a><a href="#s7">06 예상 vs 실제</a><a href="#s8">07 결정</a><a href="#s9">예상 질문 대비</a></nav>
+<main>
+  <div class="intro"><ul><li>발표 링크: <a href="https://jurnjihyun-spec.github.io/where-to-throw/aip02/">https://jurnjihyun-spec.github.io/where-to-throw/aip02/</a></li><li>프로덕트 시연: <a href="https://jurnjihyun-spec.github.io/where-to-throw/">https://jurnjihyun-spec.github.io/where-to-throw/</a></li><li>형식: 스크롤형 랜딩 페이지 (섹션 = 발표 순서)</li><li>조작: ↓/→/PageDown 다음 섹션 · ↑/←/PageUp 이전 섹션 · F 전체화면 · 상단 메뉴로 바로 이동</li><li>원칙: 두괄식 · 개조식 · 측정하지 않은 수치는 말하지 않음</li></ul><table><thead><tr><th>섹션</th><th>시간</th><th>누적</th></tr></thead><tbody><tr><td>Hero · 요약</td><td>0:30</td><td>0:30</td></tr><tr><td>01 문제</td><td>0:40</td><td>1:10</td></tr><tr><td>02 원인 (Issue Tree)</td><td>0:40</td><td>1:50</td></tr><tr><td>03 솔루션</td><td>0:40</td><td>2:30</td></tr><tr><td>04 가설</td><td>0:35</td><td>3:05</td></tr><tr><td>05 검증 (Real Voice)</td><td>0:50</td><td>3:55</td></tr><tr><td>06 예상 vs 실제</td><td>0:35</td><td>4:30</td></tr><tr><td>07 결정 + 마무리</td><td>0:30</td><td>5:00</td></tr></tbody></table></div>
+  
+<section id="s1">
+  <h2>Hero · 요약<span class="time">0:30</span></h2>
+  <p class="lead"><b>결론부터</b>: 일상 물품의 배출 유형을 확신하기 어렵다는 문제로 재정의했고, 출처 기반 안내의 가능성을 사용자 3명에게 확인했습니다.</p><ul><li>문제: 익숙한 물품도 일반쓰레기인지 재활용인지 확신하기 어렵다</li><li>솔루션: 배출 유형, 판단 이유, 공식 출처를 먼저 보여주는 '어디에 버리지?'</li><li>검증: 탐색 편의와 출처 신뢰에 긍정적 반응, 다만 GPT의 입력 편의는 경쟁 요소</li><li>결정: 가설 유지, 다음 라운드에서 실제로 이 서비스를 '선택'하는지 검증</li></ul>
+</section>
+<section id="s2">
+  <h2>01 문제<span class="time">0:40</span></h2>
+  <p class="lead"><b>결론부터</b>: 분리배출 문제는 오염 상태 판단에 그치지 않았습니다.</p><ul><li>AIP01에서 다섯 후보 중 분리배출 선택: 반복적이고 보편적이며, 해결 여부를 확인하기 쉽고, 빠르게 만들 수 있음</li><li>처음에는 <q>오염 상태에 따라 방법이 달라 헷갈린다</q>고 보고, 상태 질문 중심으로 만들었습니다</li><li>AIP01 이후 다시 보니 더 직관적인 불편은 따로 있었습니다<ul><li>햇반 용기는 플라스틱처럼 생겼는데 플라스틱으로 내도 되는지</li><li>과일 포장망은 스티로폼 같은데 재활용인지</li><li>뽁뽁이는 비닐인지 일반쓰레기인지</li></ul></li><li>핵심은 이름을 모르는 게 아니라, 알아도 배출 유형을 확신하지 못한다는 점</li><li>이 재정의는 사용자 검증 <b>전에</b> 내린 판단입니다</li></ul>
+</section>
+<section id="s3">
+  <h2>02 원인: Issue Tree<span class="time">0:40</span></h2>
+  <p class="lead"><b>결론부터</b>: 원인을 세 갈래로 나누고, 배출 유형 판단의 불확실성을 이번 라운드 검증 대상으로 골랐습니다.</p><ul><li>원인 1 정보 접근, 원인 2 배출 유형 판단, 원인 3 조건별 기준 적용</li><li>오염 조건을 적용하기 전에, 물품 자체의 배출 유형부터 확신하지 못하는 문제가 먼저일 수 있다고 판단</li><li>원인 3은 버리지 않고 보조 기능으로 유지</li><li>검증 전에 세운 가설이라는 점을 분명히 합니다</li></ul>
+</section>
+<section id="s4">
+  <h2>03 솔루션<span class="time">0:40</span></h2>
+  <p class="lead"><b>결론부터</b>: 결과를 먼저 보여주는 쪽으로 피봇했지만, 조건별 질문은 유지했습니다.</p><ul><li>바뀐 것은 기능 목록이 아니라 우선순위: '질문 먼저'에서 '결과 먼저'로</li><li>CASE A (44개 중 37개): 검색하면 바로 배출 유형, 판단 이유, 공식 출처</li><li>CASE B (7개): 조건 질문 하나를 거쳐 결과<ul><li>배달 용기·피자 박스 등은 오염·세척 가능 여부로 분기</li><li>컵라면은 재질과 오염으로 분기</li><li>치약 튜브는 오염이 아니라 '분리배출 표시'로 분기</li></ul></li><li>이름만으로 확정할 수 없는 물품이 실제로 있어서, 초기 솔루션의 유효한 부분을 남겼습니다</li></ul>
+</section>
+<section id="s5">
+  <h2>04 가설<span class="time">0:35</span></h2>
+  <p class="lead"><b>결론부터</b>: 배출 유형과 공식 근거를 간결하게 주면, 복잡한 검색 없이 확인하고 신뢰할 것이라고 가정했습니다.</p><ul><li>대상, 해결 방식, 기대 행동 순서로 구성</li><li>판단 기준 네 가지: 실제로 헷갈리는가, 쉽게 찾는가, 신뢰하는가, 기존 방식과 무엇이 다른가</li><li>과업: 햇반 용기, 과일 포장망, 뽁뽁이를 사이트에서 확인하기</li><li>대상: 20대 3명, 사용 전후 질문</li></ul>
+</section>
+<section id="s6">
+  <h2>05 검증: Real Voice<span class="time">0:50</span></h2>
+  <p class="lead"><b>결론부터</b>: 사용자들은 판단이 어렵다고 했고, 출처가 있는 안내를 신뢰했습니다.</p><ul><li>A (박0은)<ul><li>사용 전: <q>잘 모르겠음. 보통 셋다 플라스틱에 그냥 버림</q></li><li>사용 후: <q>쉽게 찾을수잇엇어요</q>, 어디에 버려야 하는지 강조한 화면이 가장 좋았다고 답함</li><li>근거자료를 보고 <q>사이트에 대한 신뢰감</q>을 언급</li></ul></li><li>B (장0정)<ul><li>사용 전: 모를 때 검색하기 귀찮아 <q>일쓰에 다 넣</q>는다고 답함</li><li>사용 후: 과일망 예상이 틀렸다고 인식했고, <q>출처 보여서</q> GPT보다 믿을 만하다고 답함</li><li>과일 그물망은 공식 기준상 종량제봉투이며, 사용 전 예상(재활용)과 다름</li></ul></li><li>C (김0영)<ul><li>사용 전: 햇반은 플라스틱, 그물망과 뽁뽁이는 <q>일쓰에 버림</q>. 과일망은 공식 기준과 일치하고, 뽁뽁이(비닐류)는 다름</li><li><q>시간 많을 땐 검색하고 바쁠 땐 그냥 버려</q></li><li>사용 후: <q>출처까지 줘서 믿을만 한 듯?</q>, <q>어디에 버려야 하는지 바로 알려주는게 좋아</q></li></ul></li><li>세 사람 모두 확인 없이 그냥 버리는 경우가 있었고, B와 C는 그 이유로 번거로움과 시간을 듦. 이것이 R2 질문으로 이어집니다</li></ul>
+</section>
+<section id="s7">
+  <h2>06 예상 vs 실제<span class="time">0:35</span></h2>
+  <p class="lead"><b>결론부터</b>: 탐색과 신뢰 가설은 정성적으로 지지됐지만, GPT의 입력 편의라는 경쟁 요소를 발견했습니다.</p><ul><li>예상 1 (불확실성), 예상 2 (쉬운 탐색), 예상 3 (출처로 인한 신뢰): 세 사람 모두에게서 지지하는 반응<ul><li>예: C도 <q>출처까지 줘서 믿을만 한 듯?</q>이라고 답함</li></ul></li><li>예상 밖: A는 <q>사진 찍어서 물어볼 수 있어서</q> GPT가 편하다고 함 (입력 편의)</li><li>사용자 3명의 진술이므로 통계적 검증은 아님</li></ul>
+</section>
+<section id="s8">
+  <h2>07 결정<span class="time">0:30</span></h2>
+  <p class="lead"><b>결론부터</b>: 가설을 유지하고 추가 사용자로 재확인했으며, 다음은 '선택' 여부를 검증합니다.</p><ul><li>1차(A·B) 반응이 예상과 부합해 전면 피봇 대신 같은 가설로 C에게 재확인했고, 같은 방향의 반응(출처 신뢰, 결과를 바로 보여주는 구성 선호)이 나와 방향을 유지</li><li>R2 질문: 헷갈리는 순간 GPT나 검색 대신 이 서비스를 고를까?<ul><li>실제 사용 상황에서의 선택, GPT 대비 완료 시간, 없는 물품을 만났을 때의 행동, 출처의 영향, 사진 입력의 필요성</li></ul></li><li>사진형 목록은 검증 후 추가한 보조 기능이며 AI 인식이 아님</li><li>마무리 섹션: <q>신뢰의 가능성은 확인했고, 다음 과제는 고를 만큼 간편한 경험입니다.</q> 이어서 '프로덕트 열기'로 시연</li></ul>
+</section>
+<section id="s9">
+  <h2>예상 질문 대비</h2>
+  <ul><li><b>3명으로 충분한가?</b> 일반화하지 않습니다. 예상과 부합했기 때문에 다른 사용자에게도 같은지 본 단계이고, R2에서 실제 선택 행동으로 확인합니다.</li><li><b>GPT보다 낫다는 건가?</b> 그렇게 주장하지 않습니다. 사용자는 출처 때문에 더 믿을 만하다고 했고, 편의성은 GPT가 강했습니다.</li><li><b>과일망 정답 근거는?</b> 환경부 생활폐기물 분리배출 누리집의 '과일 그물망' 항목과 서울시 표준 분리배출 기준(2025)에서 모두 종량제봉투로 안내합니다.</li><li><b>사진 기능은 AI인가?</b> 아닙니다. 미리 등록된 그림 목록이고, R2에서 사진 입력이 실제로 필요한지 검증할 예정입니다.</li></ul>
+</section>
+</main>
+<a class="top-btn" href="#" aria-label="맨 위로">↑</a>
+</body>
+</html>

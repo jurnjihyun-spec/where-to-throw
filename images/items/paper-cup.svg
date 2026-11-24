@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img"><title>종이컵</title>
+<ellipse cx="80" cy="134" rx="34" ry="5" fill="#000" opacity=".08"/>
+<path d="M42 38h76l-10 92a5 5 0 0 1-5 4H57a5 5 0 0 1-5-4z" fill="#fdfcf8" stroke="#d3d1c6" stroke-width="2"/>
+<path d="M46 72h68l-4 38H50z" fill="#3d8f6b"/>
+<path d="M62 84c6-8 18-8 24 0s-6 16-12 16-18-8-12-16z" fill="#fff" opacity=".85"/>
+<ellipse cx="80" cy="38" rx="40" ry="7" fill="#f3f1e9" stroke="#d3d1c6" stroke-width="2"/>
+<ellipse cx="80" cy="38" rx="33" ry="4.5" fill="#e7e3d6"/>
+</svg>
